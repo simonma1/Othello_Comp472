@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -9,11 +11,12 @@ public class Board {
     private Player playerOne;
     private Player playerTwo;
 
-
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;
 
     private HashMap<Point, SquareState> board = new HashMap<>(BOARD_HEIGHT * BOARD_WIDTH);
+
+    private ArrayList<Point> possibleMoves;
 
 
     public Board(Player p1){
@@ -52,5 +55,30 @@ public class Board {
     }
 
 
+    public String toString(){
+        String res = "";
 
+        for(int i=0;i<BOARD_HEIGHT;i++){
+            for(int j=0; j<BOARD_WIDTH;j++){
+                Point current = new Point(i,j);
+                if(board.get(current) == SquareState.BLACK){
+                    res += "B";
+                }else if(board.get(current) == SquareState.WHITE){
+                    res += "W";
+                }else{
+                    res += "0";
+                }
+            }
+        }
+
+        return res;
+    }
+
+    public ArrayList<Point> getPossibleMoves() {
+        return possibleMoves;
+    }
+
+    public void setPossibleMoves(ArrayList<Point> possibleMoves) {
+        this.possibleMoves = possibleMoves;
+    }
 }
