@@ -5,7 +5,7 @@ import java.util.HashMap;
  * Created by Simon on 2016-11-07.
  */
 public class Board {
-    
+
     private Player playerOne;
     private Player playerTwo;
 
@@ -15,7 +15,7 @@ public class Board {
 
 
 
-   // private HashMap<Point, > board = new HashMap();
+   private HashMap<Point, SquareState> board = new HashMap<>(BOARD_HEIGHT, BOARD_WIDTH);
 
 
     public Board(Player p1){
