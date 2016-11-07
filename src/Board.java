@@ -5,7 +5,7 @@ import java.util.HashMap;
  * Created by Simon on 2016-11-07.
  */
 public class Board {
-
+    
     private Player playerOne;
     private Player playerTwo;
 
@@ -30,4 +30,5 @@ public class Board {
     public void startNewGame(){
 
     }
+
 }
