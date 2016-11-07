@@ -7,9 +7,10 @@ import java.util.HashMap;
  */
 public class NextMoveGenerator {
 
-    public static ArrayList<HashMap<Point, SquareState>> generateNextStates(HashMap<Point, SquareState> state) {
-        ArrayList<HashMap<Point, SquareState>> generatedChildren = new ArrayList<>();
+    public static ArrayList<Board> generateNextStates(Board state) {
+        ArrayList<Board> generatedChildrenStates = new ArrayList<>();
 
-        return generatedChildren;
+
+        return generatedChildrenStates;
     }
 }

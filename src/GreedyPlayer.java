@@ -9,6 +9,6 @@ public class GreedyPlayer extends Player {
 
     @Override
     public void findNextMove(Board updatedBoard) {
-        ArrayList<HashMap<Point, SquareState>> nextStates = NextMoveGenerator.generateNextStates(updatedBoard.getBoard());
+        ArrayList<Board> nextStates = NextMoveGenerator.generateNextStates(updatedBoard);
     }
 }
