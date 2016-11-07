@@ -10,6 +10,7 @@ public class Board {
 
     private Player playerOne;
     private Player playerTwo;
+    private Turn turn = Turn.BLACK;
 
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;
