@@ -2,6 +2,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Created by Simon on 2016-11-07.
@@ -28,7 +30,7 @@ public class Board {
 
     public Board(Player p1){
         playerOne = p1;
-        playerOne.setColor(Turn.BLACK);
+        playerOne.setColor(Turn.WHITE);
     }
 
     public Board(Player p1, Player p2){
@@ -61,10 +63,10 @@ public class Board {
     private void play(){
         while(!gameOver){
             if (playerOne.getColor() == turn){
-                playerOne.findNextMove(this);//Maybe pass the hashmap instead
+               // playerOne.findNextMove(this);//Maybe pass the hashmap instead
             }else{
                 if(playerTwo != null){// playerTwo is a computer
-                    playerTwo.findNextMove(this);
+                   // playerTwo.findNextMove(this);
                 }else{//PlayerTwo is human
                     getNextMoveFromInput();
                 }
@@ -74,6 +76,37 @@ public class Board {
     }
 
     private void getNextMoveFromInput() {
+        Scanner keyboard = new Scanner(System.in);
+        String input;
+        boolean isValid;
+
+        System.out.println("Your turn. What is your next move?");
+        System.out.println("You can either a point (e.g. x,y) which will be where you put your next piece, " +
+                    "or a string of what the board will look like");
+
+        Pattern pattern = Pattern.compile("[0-7],[0-7]");
+
+
+
+       if(keyboard.hasNext(pattern)){
+           Point userPoint;
+
+           input = keyboard.nextLine();
+           String[] pointData = input.split(",");
+           int a =  Integer.parseInt(pointData[0]);
+           int b =  Integer.parseInt(pointData[1]);
+           System.out.println(input + " Point a: " + a + " Point b: " + b);
+
+           userPoint = new Point(a,b);
+
+       }else{
+           input = keyboard.nextLine();
+           System.out.println(input + " String");
+       }
+
+        gameOver=true;//For testing only remove when done with the function
+
+
     }
 
     private void updateTurn() {
