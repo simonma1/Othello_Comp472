@@ -78,7 +78,7 @@ public class Board {
     private void getNextMoveFromInput() {
         Scanner keyboard = new Scanner(System.in);
         String input;
-        boolean isValid;
+        boolean isValidMove = false;
 
         System.out.println("Your turn. What is your next move?");
         System.out.println("You can either a point (e.g. x,y) which will be where you put your next piece, " +
@@ -91,13 +91,22 @@ public class Board {
        if(keyboard.hasNext(pattern)){
            Point userPoint;
 
-           input = keyboard.nextLine();
-           String[] pointData = input.split(",");
-           int a =  Integer.parseInt(pointData[0]);
-           int b =  Integer.parseInt(pointData[1]);
-           System.out.println(input + " Point a: " + a + " Point b: " + b);
+           while(!isValidMove) {
+               input = keyboard.nextLine();
+               String[] pointData = input.split(",");
+               int a = Integer.parseInt(pointData[0]);
+               int b = Integer.parseInt(pointData[1]);
+               System.out.println(input + " Point a: " + a + " Point b: " + b);
 
-           userPoint = new Point(a,b);
+               userPoint = new Point(a, b);
+
+               isValidMove = checkIfValidMove(userPoint);
+
+               if (isValidMove){
+                   updateBoard();
+               }
+           }
+
 
        }else{
            input = keyboard.nextLine();
@@ -107,6 +116,13 @@ public class Board {
         gameOver=true;//For testing only remove when done with the function
 
 
+    }
+
+    private void updateBoard() {//Updating the board is done here or somewhere else?
+    }
+
+    private boolean checkIfValidMove(Point point) {//Maybe the check should be done somewhere else
+        return true;
     }
 
     private void updateTurn() {
