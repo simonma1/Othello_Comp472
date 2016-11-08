@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by BaDaS on 2016-11-07.
+ * Created by Harrison on 2016-11-07.
  */
 public class GreedyPlayer extends Player {
 
