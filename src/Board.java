@@ -11,6 +11,7 @@ public class Board {
     private Player playerOne;
     private Player playerTwo;
     private Turn turn = Turn.BLACK;
+    private boolean gameOver = false;
 
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;
@@ -20,8 +21,14 @@ public class Board {
     private ArrayList<Point> possibleMoves;
 
 
+    public Board(Player p1, Turn color){
+        playerOne = p1;
+        playerOne.setColor(color);
+    }
+
     public Board(Player p1){
         playerOne = p1;
+        playerOne.setColor(Turn.BLACK);
     }
 
     public Board(Player p1, Player p2){
@@ -45,6 +52,36 @@ public class Board {
         board.put(new Point(3,4),SquareState.BLACK);
         board.put(new Point(4,3),SquareState.BLACK);
         board.put(new Point(4,4),SquareState.WHITE);
+
+        System.out.println(this.toString());
+
+        play();
+    }
+
+    private void play(){
+        while(!gameOver){
+            if (playerOne.getColor() == turn){
+                playerOne.findNextMove(this);//Maybe pass the hashmap instead
+            }else{
+                if(playerTwo != null){// playerTwo is a computer
+                    playerTwo.findNextMove(this);
+                }else{//PlayerTwo is human
+                    getNextMoveFromInput();
+                }
+            }
+            updateTurn();
+        }
+    }
+
+    private void getNextMoveFromInput() {
+    }
+
+    private void updateTurn() {
+        if (turn == Turn.BLACK) {
+            turn = Turn.WHITE;
+        }else {
+            turn = Turn.BLACK;
+        }
     }
 
     public HashMap<Point, SquareState> getBoard() {
@@ -70,6 +107,7 @@ public class Board {
                     res += "0";
                 }
             }
+            res +=" \n";
         }
 
         return res;

@@ -8,6 +8,5 @@ public class Driver {
         Board board = new Board(p1);
 
         board.startNewGame();
-        System.out.println(board.toString());
     }
 }
