@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class MinMaxPlayer extends Player {
 
     @Override
-    public void findNextMove(Board updatedBoard) {
-        ArrayList<Board> nextStates = NextMoveGenerator.generateNextStates(updatedBoard);
+    public void findNextMove(Board updatedBoard, Turn turn) {
+        ArrayList<Board> nextStates = NextMoveGenerator.generateNextStates(updatedBoard, turn);
     }
 }

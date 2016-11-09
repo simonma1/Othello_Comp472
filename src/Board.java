@@ -16,8 +16,8 @@ public class Board {
     private Turn turn = Turn.BLACK;
     private boolean gameOver = false;
 
-    private final int BOARD_WIDTH = 8;
-    private final int BOARD_HEIGHT = 8;
+    public static final int BOARD_WIDTH = 8;
+    public static final int BOARD_HEIGHT = 8;
 
     private HashMap<Point, SquareState> board = new HashMap<>(BOARD_HEIGHT * BOARD_WIDTH);
 

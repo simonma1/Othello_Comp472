@@ -7,11 +7,11 @@ import java.util.ArrayList;
 public class NextMoveGenerator {
 
 
-    public static ArrayList<Board> generateNextStates(Board board) {
+    public static ArrayList<Board> generateNextStates(Board board, Turn turn) {
         ArrayList<Board> generatedChildrenStates = new ArrayList<>();
         for (Point possibleMove :
                 board.getPossibleMoves()) {
-            if (isValidMove(board, possibleMove)) {
+            if (isValidMove(board, possibleMove, turn)) {
 
             }
 
@@ -20,8 +20,18 @@ public class NextMoveGenerator {
         return generatedChildrenStates;
     }
 
-    private static boolean isValidMove(Board board, Point possibleMove) {
+    private static boolean isValidMove(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
+        int encounteredOppositeColors;
+
+        isValidMove = checkValidConditionsRight(board, possibleMove, turn) ||
+                checkValidConditionsLeft(board, possibleMove, turn) ||
+                checkValidConditionsUnder(board, possibleMove, turn) ||
+                checkValidConditionsOver(board, possibleMove, turn) ||
+                checkValidConditionsTopLeftDiagonal(board, possibleMove, turn) ||
+                checkValidConditionsTopRightDiagonal(board, possibleMove, turn) ||
+                checkValidConditionsBottomLeftDiagonal(board, possibleMove, turn) ||
+                checkValidConditionsBottomRightDiagonal(board, possibleMove, turn);
 
         ArrayList<Point> adjacentSquares = getAdjacentSquares(possibleMove);
         for (Point adjacentSquare :
@@ -30,6 +40,222 @@ public class NextMoveGenerator {
         }
         board.getBoard().get(possibleMove);
 
+        return isValidMove;
+    }
+
+    private static boolean checkValidConditionsRight(Board board, Point possibleMove, Turn turn) {
+        int encounteredOppositeColors;
+        boolean isValidMove = false;
+        encounteredOppositeColors = 0;
+        // check for valid move conditions to the right of this possible move
+        for (int i = (int)possibleMove.getX(); i < Board.BOARD_WIDTH; i++) {
+            Point currentPos = new Point(i, (int)possibleMove.getY()); // define the current iterated point
+            if (turn == Turn.BLACK) {
+                if (board.getBoard().get(currentPos) == SquareState.WHITE) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.BLACK && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+            else {
+                if (board.getBoard().get(currentPos) == SquareState.BLACK) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.WHITE && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+        }
+        return isValidMove;
+    }
+
+    private static boolean checkValidConditionsLeft(Board board, Point possibleMove, Turn turn) {
+        int encounteredOppositeColors;
+        boolean isValidMove = false;
+        encounteredOppositeColors = 0;
+        // check for valid move conditions to the left of this possible move
+        for (int i = (int)possibleMove.getX(); i > 0; i--) {
+            Point currentPos = new Point(i, (int)possibleMove.getY()); // define the current iterated point
+            if (turn == Turn.BLACK) {
+                if (board.getBoard().get(currentPos) == SquareState.WHITE) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.BLACK && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+            else {
+                if (board.getBoard().get(currentPos) == SquareState.BLACK) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.WHITE && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+        }
+        return isValidMove;
+    }
+
+    private static boolean checkValidConditionsUnder(Board board, Point possibleMove, Turn turn) {
+        int encounteredOppositeColors;
+        boolean isValidMove = false;
+        encounteredOppositeColors = 0;
+        // check for valid move conditions under of this possible move
+        for (int i = (int)possibleMove.getY(); i < Board.BOARD_HEIGHT; i++) {
+            Point currentPos = new Point((int)possibleMove.getX(), i); // define the current iterated point
+            if (turn == Turn.BLACK) {
+                if (board.getBoard().get(currentPos) == SquareState.WHITE) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.BLACK && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+            else {
+                if (board.getBoard().get(currentPos) == SquareState.BLACK) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.WHITE && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+        }
+        return isValidMove;
+    }
+
+    private static boolean checkValidConditionsOver(Board board, Point possibleMove, Turn turn) {
+        int encounteredOppositeColors;
+        boolean isValidMove = false;
+        encounteredOppositeColors = 0;
+        // check for valid move conditions over of this possible move
+        for (int i = (int)possibleMove.getY(); i > 0; i--) {
+            Point currentPos = new Point((int)possibleMove.getX(), i); // define the current iterated point
+            if (turn == Turn.BLACK) {
+                if (board.getBoard().get(currentPos) == SquareState.WHITE) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.BLACK && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+            else {
+                if (board.getBoard().get(currentPos) == SquareState.BLACK) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.WHITE && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+        }
+        return isValidMove;
+    }
+
+    private static boolean checkValidConditionsTopLeftDiagonal(Board board, Point possibleMove, Turn turn) {
+        int encounteredOppositeColors;
+        boolean isValidMove = false;
+        encounteredOppositeColors = 0;
+        // check for valid move conditions in the top left diagonal of this possible move
+        for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i > 0 && j < Board.BOARD_HEIGHT; i--, j++) {
+            Point currentPos = new Point(i, j); // define the current iterated point
+            if (turn == Turn.BLACK) {
+                if (board.getBoard().get(currentPos) == SquareState.WHITE) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.BLACK && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+            else {
+                if (board.getBoard().get(currentPos) == SquareState.BLACK) { // check for encountered blacks
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.WHITE && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+        }
+        return isValidMove;
+    }
+
+    private static boolean checkValidConditionsTopRightDiagonal(Board board, Point possibleMove, Turn turn) {
+        int encounteredOppositeColors;
+        boolean isValidMove = false;
+        encounteredOppositeColors = 0;
+        // check for valid move conditions in the top right diagonal of this possible move
+        for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i < Board.BOARD_WIDTH && j < Board.BOARD_HEIGHT; i++, j++) {
+            Point currentPos = new Point(i, j); // define the current iterated point
+            if (turn == Turn.BLACK) {
+                if (board.getBoard().get(currentPos) == SquareState.WHITE) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.BLACK && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+            else {
+                if (board.getBoard().get(currentPos) == SquareState.BLACK) { // check for encountered blacks
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.WHITE && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+        }
+        return isValidMove;
+    }
+
+    private static boolean checkValidConditionsBottomLeftDiagonal(Board board, Point possibleMove, Turn turn) {
+        int encounteredOppositeColors;
+        boolean isValidMove = false;
+        encounteredOppositeColors = 0;
+        // check for valid move conditions in the bottom left diagonal of this possible move
+        for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i > 0 && j > 0; i--, j--) {
+            Point currentPos = new Point(i, j); // define the current iterated point
+            if (turn == Turn.BLACK) {
+                if (board.getBoard().get(currentPos) == SquareState.WHITE) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.BLACK && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+            else {
+                if (board.getBoard().get(currentPos) == SquareState.BLACK) { // check for encountered blacks
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.WHITE && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+        }
+        return isValidMove;
+    }
+
+    private static boolean checkValidConditionsBottomRightDiagonal(Board board, Point possibleMove, Turn turn) {
+        int encounteredOppositeColors;
+        boolean isValidMove = false;
+        encounteredOppositeColors = 0;
+        // check for valid move conditions in the bottom right diagonal of this possible move
+        for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i < Board.BOARD_WIDTH && j > 0; i++, j--) {
+            Point currentPos = new Point(i, j); // define the current iterated point
+            if (turn == Turn.BLACK) {
+                if (board.getBoard().get(currentPos) == SquareState.WHITE) { // check for encountered whites
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.BLACK && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+            else {
+                if (board.getBoard().get(currentPos) == SquareState.BLACK) { // check for encountered blacks
+                    encounteredOppositeColors++;
+                }
+                if (board.getBoard().get(currentPos) == SquareState.WHITE && encounteredOppositeColors > 0) {
+                    isValidMove = true;
+                }
+            }
+        }
         return isValidMove;
     }
 

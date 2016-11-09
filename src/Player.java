@@ -11,9 +11,9 @@ public abstract class Player {
 
     }
 
-    public abstract void findNextMove(Board updatedBoard);
+    public abstract void findNextMove(Board updatedBoard, Turn turn);
 
-    public void updateBoard(Board updatedBoard) {
+    public void updateBoard(Board updatedBoard, Turn turn) {
         board = updatedBoard;
     }
 
