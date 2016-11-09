@@ -24,7 +24,6 @@ public class Board {
 
     /*
     * List of things to do
-    * 1. Take string representation of the board as input
     * 2. Find the point that was added from this input and pass it to check validity
     * 3. Make function to find validity of a move given a point that was added
     * 4. Create function to check if the game is over
@@ -82,6 +81,8 @@ public class Board {
                 }
             }
 
+           System.out.println("Here is the state of the board after the turn: ");
+            System.out.println(this.toString());
             gameOver = checkIfGameOver();
             updateTurn();
         }
@@ -133,9 +134,23 @@ public class Board {
                 input = keyboard.nextLine();
                 System.out.println(input + " String");
 
+                isValidMove = checkIfValidMove(input);
+
                 //add valid input check
             }else if(keyboard.hasNext(listPattern)){
-                input = keyboard.nextLine();
+                keyboard.nextLine();
+                input ="";
+                Pattern oneLineOfList = Pattern.compile("(\\([BW0]{8}\\))");
+                int count = 0;
+                while(keyboard.hasNext(oneLineOfList) && count < BOARD_HEIGHT){
+                    input += keyboard.nextLine();
+                    count++;
+                }
+                if(keyboard.hasNext(Pattern.compile("\\)"))){
+                    keyboard.nextLine();//return the input field to ignore the last parenthesis
+                }
+
+                isValidMove = checkIfValidMove(input);
                 System.out.println(input + " List");
                 //add parsing taking into account the line break
                 //add valid input check
@@ -146,6 +161,13 @@ public class Board {
                 //When checking if valid move maybe find the point where the user made the move and interface it
             }
 
+    }
+
+    private boolean checkIfValidMove(String input) {
+        Point pointOfString = null;
+
+        //Add method to find the point from a string here
+        return(checkIfValidMove(pointOfString));
     }
 
     private void updateBoard() {//Updating the board is done here or somewhere else?
