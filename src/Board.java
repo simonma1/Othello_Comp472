@@ -100,41 +100,44 @@ public class Board {
         String input;
         boolean isValidMove = false;
 
-        System.out.println("Your turn. What is your next move?");
-        System.out.println("You can either a point (e.g. x,y) which will be where you put your next piece, " +
+        while(!isValidMove) {
+            System.out.println("Your turn. What is your next move?");
+            System.out.println("You can enter either a point (e.g. x,y) which will be where you put your next piece, " +
                     "or a string of what the board will look like");
 
-        Pattern pattern = Pattern.compile("[0-7],[0-7]");
+            Pattern pointPattern = Pattern.compile("[0-7],[0-7]");
+            Pattern stringPattern = Pattern.compile("(\\([BW0]{8}\\)){8}");
 
 
+            if (keyboard.hasNext(pointPattern)) {
+                Point userPoint;
 
-       if(keyboard.hasNext(pattern)){
-           Point userPoint;
+                input = keyboard.nextLine();
+                String[] pointData = input.split(",");
+                int a = Integer.parseInt(pointData[0]);
+                int b = Integer.parseInt(pointData[1]);
+                System.out.println(input + " Point a: " + a + " Point b: " + b);
 
-           while(!isValidMove) {
-               input = keyboard.nextLine();
-               String[] pointData = input.split(",");
-               int a = Integer.parseInt(pointData[0]);
-               int b = Integer.parseInt(pointData[1]);
-               System.out.println(input + " Point a: " + a + " Point b: " + b);
+                userPoint = new Point(a, b);
 
-               userPoint = new Point(a, b);
+                isValidMove = checkIfValidMove(userPoint);
 
-               isValidMove = checkIfValidMove(userPoint);
-
-               if (isValidMove){
-                   updateBoard();
-               }
-           }
+                if (isValidMove) {
+                    updateBoard();
+                }
 
 
-       }else{
-           input = keyboard.nextLine();
-           System.out.println(input + " String");
-
-           //When checking if valid move maybe find the point where the user made the move and interface it
-       }
-
+            } else {
+                if(keyboard.hasNext(stringPattern)) {
+                    input = keyboard.nextLine();
+                    System.out.println(input + " String");
+                }else{
+                    input = keyboard.nextLine();
+                    System.out.println(input + " is an invalid input. Please try again");
+                }
+                //When checking if valid move maybe find the point where the user made the move and interface it
+            }
+        }
     }
 
     private void updateBoard() {//Updating the board is done here or somewhere else?
