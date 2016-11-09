@@ -107,6 +107,7 @@ public class Board {
 
             Pattern pointPattern = Pattern.compile("[0-7],[0-7]");
             Pattern stringPattern = Pattern.compile("(\\([BW0]{8}\\)){8}");
+            Pattern listPattern = Pattern.compile("\\(");
 
 
             if (keyboard.hasNext(pointPattern)) {
@@ -127,17 +128,24 @@ public class Board {
                 }
 
 
-            } else {
-                if(keyboard.hasNext(stringPattern)) {
-                    input = keyboard.nextLine();
-                    System.out.println(input + " String");
-                }else{
+            }else if(keyboard.hasNext(stringPattern)) {
+
+                input = keyboard.nextLine();
+                System.out.println(input + " String");
+
+                //add valid input check
+            }else if(keyboard.hasNext(listPattern)){
+                input = keyboard.nextLine();
+                System.out.println(input + " List");
+                //add parsing taking into account the line break
+                //add valid input check
+            }else{
                     input = keyboard.nextLine();
                     System.out.println(input + " is an invalid input. Please try again");
                 }
                 //When checking if valid move maybe find the point where the user made the move and interface it
             }
-        }
+
     }
 
     private void updateBoard() {//Updating the board is done here or somewhere else?
