@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -164,11 +165,43 @@ public class Board {
     }
 
     private boolean checkIfValidMove(String input) {
+        HashMap<Point, SquareState> updatedBoard = new HashMap<>(BOARD_HEIGHT * BOARD_WIDTH);
         Point pointOfString = null;
+
+        updatedBoard = convertStringToMap(input);
+        System.out.println("The new board looks like: ");
+        System.out.println(toString(updatedBoard));
 
         //Add method to find the point from a string here
         return(checkIfValidMove(pointOfString));
     }
+
+    private HashMap<Point,SquareState> convertStringToMap(String input) {
+        HashMap<Point,SquareState> updatedBoard = new HashMap<>(BOARD_HEIGHT * BOARD_WIDTH);
+        String[] stringArr = new String[BOARD_HEIGHT];
+
+        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(input);
+        int k=0;
+        while(m.find()) {
+            stringArr[k]=m.group(1);
+            k++;
+        }
+
+        for(int i=0;i<BOARD_HEIGHT;i++){
+            for(int j=0;j<BOARD_WIDTH;j++){
+                if(stringArr[i].charAt(j) == 'W'){
+                    updatedBoard.put(new Point(i,j),SquareState.WHITE);
+                }else if(stringArr[i].charAt(j) == 'B'){
+                    updatedBoard.put(new Point(i,j),SquareState.BLACK);
+                }else{
+                    updatedBoard.put(new Point(i,j),SquareState.EMPTY);
+                }
+            }
+        }
+
+        return updatedBoard;
+    }
+
 
     private void updateBoard() {//Updating the board is done here or somewhere else?
     }
@@ -193,8 +226,11 @@ public class Board {
         this.board = board;
     }
 
-
     public String toString(){
+        return toString(this.board);
+    }
+
+    public String toString(HashMap<Point,SquareState> board){
         String res = "";
 
         for(int i=0;i<BOARD_HEIGHT;i++){
@@ -213,6 +249,8 @@ public class Board {
 
         return res;
     }
+
+
 
     public ArrayList<Point> getPossibleMoves() {
         return possibleMoves;
