@@ -22,6 +22,16 @@ public class Board {
 
     private ArrayList<Point> possibleMoves;
 
+    /*
+    * List of things to do
+    * 1. Take string representation of the board as input
+    * 2. Find the point that was added from this input and pass it to check validity
+    * 3. Make function to find validity of a move given a point that was added
+    * 4. Create function to check if the game is over
+    * 5. Function to update the board if input is acceptable
+    * 6. Function to find the next move
+    * */
+
 
     public Board(Player p1, Turn color){
         playerOne = p1;
@@ -65,13 +75,23 @@ public class Board {
             if (playerOne.getColor() == turn){
                // playerOne.findNextMove(this);//Maybe pass the hashmap instead
             }else{
-                if(playerTwo != null){// playerTwo is a computer
+                if(playerTwo != null){// playerTwo is human
                    // playerTwo.findNextMove(this);
                 }else{//PlayerTwo is human
                     getNextMoveFromInput();
                 }
             }
+
+            gameOver = checkIfGameOver();
             updateTurn();
+        }
+    }
+
+    private boolean checkIfGameOver() {
+        if(true){
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -111,10 +131,9 @@ public class Board {
        }else{
            input = keyboard.nextLine();
            System.out.println(input + " String");
+
+           //When checking if valid move maybe find the point where the user made the move and interface it
        }
-
-        gameOver=true;//For testing only remove when done with the function
-
 
     }
 
