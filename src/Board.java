@@ -25,7 +25,6 @@ public class Board {
 
     /*
     * List of things to do
-    * 2. Find the point that was added from this input and pass it to check validity
     * 3. Make function to find validity of a move given a point that was added
     * 4. Create function to check if the game is over
     * 5. Function to update the board if input is acceptable
@@ -172,8 +171,28 @@ public class Board {
         System.out.println("The new board looks like: ");
         System.out.println(toString(updatedBoard));
 
+        pointOfString= findNewPoint(updatedBoard);
+
         //Add method to find the point from a string here
         return(checkIfValidMove(pointOfString));
+    }
+
+    private Point findNewPoint(HashMap<Point, SquareState> updatedBoard) {
+        //Returns the first point that used to be 0 that is now etheir B or W
+        Point addedPoint = new Point(-1,-1);// watch out for times no moves were made
+
+        for(int i=0;i<BOARD_HEIGHT;i++){
+            for(int j=0;j<BOARD_WIDTH;j++){
+                SquareState initial = board.get(new Point(i,j));
+                SquareState updated = updatedBoard.get(new Point(i,j));
+                if(initial == SquareState.EMPTY && updated !=SquareState.EMPTY){
+                    addedPoint = new Point(i,j);
+                }
+            }
+        }
+
+        System.out.println("The point that was updated was " + addedPoint.toString());
+        return addedPoint;
     }
 
     private HashMap<Point,SquareState> convertStringToMap(String input) {
