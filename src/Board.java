@@ -83,6 +83,7 @@ public class Board {
                 }
             }
 
+            updateBoard();
            System.out.println("Here is the state of the board after the turn: ");
             System.out.println(this.toString());
             gameOver = checkIfGameOver();
