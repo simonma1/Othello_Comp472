@@ -31,7 +31,6 @@ public class Board {
     * List of things to do
     * Function to update the board if input is acceptable( don't forget to count the pieces of each color)
     * Function to check if both players have passed their turns implying game over
-    * Output the board as a list as described in assignment
     * */
 
 
@@ -258,9 +257,10 @@ public class Board {
     }
 
     public String toString(HashMap<Point,SquareState> board){
-        String res = "";
+        String res = "( \n";
 
         for(int i=0;i<BOARD_HEIGHT;i++){
+            res += "(";
             for(int j=0; j<BOARD_WIDTH;j++){
                 Point current = new Point(i,j);
                 if(board.get(current) == SquareState.BLACK){
@@ -271,9 +271,9 @@ public class Board {
                     res += "0";
                 }
             }
-            res +=" \n";
+            res +=") \n";
         }
-
+        res += ")";
         return res;
     }
 
