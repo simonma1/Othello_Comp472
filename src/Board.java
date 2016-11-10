@@ -15,6 +15,10 @@ public class Board {
     private Player playerTwo;
     private Turn turn = Turn.BLACK;
     private boolean gameOver = false;
+    private int turnNumber = 0;
+    private boolean noMovesAvailable = false;
+    private int blackPieces = 2;
+    private int whitePieces = 2;
 
     public static final int BOARD_WIDTH = 8;
     public static final int BOARD_HEIGHT = 8;
@@ -25,10 +29,9 @@ public class Board {
 
     /*
     * List of things to do
-    * 3. Make function to find validity of a move given a point that was added
-    * 4. Create function to check if the game is over
-    * 5. Function to update the board if input is acceptable
-    * 6. Function to find the next move
+    * Function to update the board if input is acceptable( don't forget to count the pieces of each color)
+    * Function to check if both players have passed their turns implying game over
+    * Output the board as a list as described in assignment
     * */
 
 
@@ -85,11 +88,16 @@ public class Board {
             System.out.println(this.toString());
             gameOver = checkIfGameOver();
             updateTurn();
+            turnNumber++;
         }
     }
 
     private boolean checkIfGameOver() {
-        if(true){
+        if(turnNumber == BOARD_HEIGHT*BOARD_WIDTH){
+            return true;
+        }else if(noMovesAvailable){
+            return true;
+        }else if(whitePieces == 0 || blackPieces == 0){
             return true;
         }else{
             return false;
@@ -269,7 +277,21 @@ public class Board {
         return res;
     }
 
+    public int getBlackPieces() {
+        return blackPieces;
+    }
 
+    public void setBlackPieces(int blackPieces) {
+        this.blackPieces = blackPieces;
+    }
+
+    public int getWhitePieces() {
+        return whitePieces;
+    }
+
+    public void setWhitePieces(int whitePieces) {
+        this.whitePieces = whitePieces;
+    }
 
     public ArrayList<Point> getPossibleMoves() {
         return possibleMoves;
