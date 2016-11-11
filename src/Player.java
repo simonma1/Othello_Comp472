@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.HashMap;
 
 public abstract class Player {
@@ -11,11 +12,8 @@ public abstract class Player {
 
     }
 
-    public abstract void findNextMove(Board updatedBoard, Turn turn);
+    public abstract HashMap<Point,SquareState> findNextMove(Board updatedBoard, Turn turn);
 
-    public void updateBoard(Board updatedBoard, Turn turn) {
-        board = updatedBoard;
-    }
 
     public Turn getColor() {
         return color;

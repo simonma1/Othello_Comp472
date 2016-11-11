@@ -29,8 +29,8 @@ public class Board {
 
     /*
     * List of things to do
-    * Function to update the board if input is acceptable( don't forget to count the pieces of each color)
     * Function to check if both players have passed their turns implying game over
+    * NextMoveGenerator or Player returns updated board
     * */
 
 
@@ -72,23 +72,26 @@ public class Board {
     }
 
     private void play(){
+        HashMap<Point, SquareState> updatedBoardValue= null;
         while(!gameOver){
             if (playerOne.getColor() == turn){
-               // playerOne.findNextMove(this);//Maybe pass the hashmap instead
+               // updatedBoardValue = playerOne.findNextMove(this);//Maybe pass the hashmap instead
             }else{
-                if(playerTwo != null){// playerTwo is human
-                   // playerTwo.findNextMove(this);
+                if(playerTwo != null){
+                   // updatedBoardValue playerTwo.findNextMove(this);
                 }else{//PlayerTwo is human
-                    getNextMoveFromInput();
+                    updatedBoardValue = getNextMoveFromInput();
                 }
             }
 
-            updateBoard();
-           System.out.println("Here is the state of the board after the turn: ");
+            //updateBoard(updatedBoardValue);
+            System.out.println("Here is the state of the board after the turn: ");
             System.out.println(this.toString());
             gameOver = checkIfGameOver();
-            updateTurn();
-            turnNumber++;
+            if(!gameOver){
+                updateTurn();
+                turnNumber++;
+            }
         }
     }
 
@@ -104,10 +107,11 @@ public class Board {
         }
     }
 
-    private void getNextMoveFromInput() {
+    private HashMap<Point,SquareState> getNextMoveFromInput() {
         Scanner keyboard = new Scanner(System.in);
         String input;
         boolean isValidMove = false;
+        HashMap<Point, SquareState> updatedValue = null;
 
         while(!isValidMove) {
             System.out.println("Your turn. What is your next move?");
@@ -119,7 +123,7 @@ public class Board {
             Pattern listPattern = Pattern.compile("\\(");
 
 
-            if (keyboard.hasNext(pointPattern)) {
+            if (keyboard.hasNext(pointPattern)) {//Input as a point representing the new move
                 Point userPoint;
 
                 input = keyboard.nextLine();
@@ -133,11 +137,11 @@ public class Board {
                 isValidMove = checkIfValidMove(userPoint);
 
                 if (isValidMove) {
-                    updateBoard();
+                    return updatedValue;
                 }
 
 
-            }else if(keyboard.hasNext(stringPattern)) {
+            }else if(keyboard.hasNext(stringPattern)) {//Single line of input
 
                 input = keyboard.nextLine();
                 System.out.println(input + " String");
@@ -145,7 +149,7 @@ public class Board {
                 isValidMove = checkIfValidMove(input);
 
                 //add valid input check
-            }else if(keyboard.hasNext(listPattern)){
+            }else if(keyboard.hasNext(listPattern)){//input as specified in assignement
                 keyboard.nextLine();
                 input ="";
                 Pattern oneLineOfList = Pattern.compile("(\\([BW0]{8}\\))");
@@ -168,7 +172,7 @@ public class Board {
                 }
                 //When checking if valid move maybe find the point where the user made the move and interface it
             }
-
+        return updatedValue;
     }
 
     private boolean checkIfValidMove(String input) {
@@ -230,7 +234,21 @@ public class Board {
     }
 
 
-    private void updateBoard() {//Updating the board is done here or somewhere else?
+    private void updateBoard(HashMap<Point, SquareState> updatedBoard) {
+        blackPieces = 0;
+        whitePieces = 0;
+        for(int i=0; i<BOARD_HEIGHT;i++){
+            for (int j=0; j<BOARD_WIDTH; j++){
+                Point currentPoint = new Point(i,j);
+                SquareState updatedValue = updatedBoard.get(currentPoint);
+                if(updatedValue == SquareState.BLACK){
+                    blackPieces++;
+                }if(updatedValue == SquareState.WHITE){
+                    whitePieces++;
+                }
+                board.put(currentPoint, updatedValue);
+            }
+        }
     }
 
     private boolean checkIfValidMove(Point point) {//Maybe the check should be done somewhere else
