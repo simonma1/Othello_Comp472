@@ -84,7 +84,7 @@ public class Board {
                 }
             }
 
-            //updateBoard(updatedBoardValue);
+            updateBoard(updatedBoardValue);
             System.out.println("Here is the state of the board after the turn: ");
             System.out.println(this.toString());
             gameOver = checkIfGameOver();
@@ -137,7 +137,7 @@ public class Board {
                 isValidMove = checkIfValidMove(userPoint);
 
                 if (isValidMove) {
-                    return updatedValue;
+                     //updatedValue =;
                 }
 
 
@@ -148,7 +148,10 @@ public class Board {
 
                 isValidMove = checkIfValidMove(input);
 
-                //add valid input check
+                if (isValidMove) {
+                    updatedValue = convertStringToMap(input);
+                }
+
             }else if(keyboard.hasNext(listPattern)){//input as specified in assignement
                 keyboard.nextLine();
                 input ="";
@@ -163,9 +166,11 @@ public class Board {
                 }
 
                 isValidMove = checkIfValidMove(input);
-                System.out.println(input + " List");
-                //add parsing taking into account the line break
-                //add valid input check
+
+                if (isValidMove) {
+                    updatedValue = convertStringToMap(input);
+                }
+
             }else{
                     input = keyboard.nextLine();
                     System.out.println(input + " is an invalid input. Please try again");
@@ -180,8 +185,6 @@ public class Board {
         Point pointOfString = null;
 
         updatedBoard = convertStringToMap(input);
-        System.out.println("The new board looks like: ");
-        System.out.println(toString(updatedBoard));
 
         pointOfString= findNewPoint(updatedBoard);
 
@@ -189,6 +192,9 @@ public class Board {
         return(checkIfValidMove(pointOfString));
     }
 
+    /*
+    * Finds the point that was added to the board when taking string user input
+    * */
     private Point findNewPoint(HashMap<Point, SquareState> updatedBoard) {
         //Returns the first point that used to be 0 that is now etheir B or W
         Point addedPoint = new Point(-1,-1);// watch out for times no moves were made
@@ -207,6 +213,9 @@ public class Board {
         return addedPoint;
     }
 
+    /*
+    * Converts the string input of the board to a map
+    * */
     private HashMap<Point,SquareState> convertStringToMap(String input) {
         HashMap<Point,SquareState> updatedBoard = new HashMap<>(BOARD_HEIGHT * BOARD_WIDTH);
         String[] stringArr = new String[BOARD_HEIGHT];
