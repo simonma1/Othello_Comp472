@@ -17,8 +17,8 @@ public class Board {
     private boolean gameOver = false;
     private int turnNumber = 0;
     private boolean noMovesAvailable = false;
-    private int blackPieces = 2;
-    private int whitePieces = 2;
+    private int numBlackPieces = 2;
+    private int numWhitePieces = 2;
 
     public static final int BOARD_WIDTH = 8;
     public static final int BOARD_HEIGHT = 8;
@@ -100,7 +100,7 @@ public class Board {
             return true;
         }else if(noMovesAvailable){
             return true;
-        }else if(whitePieces == 0 || blackPieces == 0){
+        }else if(numWhitePieces == 0 || numBlackPieces == 0){
             return true;
         }else{
             return false;
@@ -245,16 +245,16 @@ public class Board {
 
 
     private void updateBoard(HashMap<Point, SquareState> updatedBoard) {
-        blackPieces = 0;
-        whitePieces = 0;
+        numBlackPieces = 0;
+        numWhitePieces = 0;
         for(int i=0; i<BOARD_HEIGHT;i++){
             for (int j=0; j<BOARD_WIDTH; j++){
                 Point currentPoint = new Point(i,j);
                 SquareState updatedValue = updatedBoard.get(currentPoint);
                 if(updatedValue == SquareState.BLACK){
-                    blackPieces++;
+                    numBlackPieces++;
                 }if(updatedValue == SquareState.WHITE){
-                    whitePieces++;
+                    numWhitePieces++;
                 }
                 board.put(currentPoint, updatedValue);
             }
@@ -307,20 +307,20 @@ public class Board {
         return res;
     }
 
-    public int getBlackPieces() {
-        return blackPieces;
+    public int getNumBlackPieces() {
+        return numBlackPieces;
     }
 
-    public void setBlackPieces(int blackPieces) {
-        this.blackPieces = blackPieces;
+    public void setNumBlackPieces(int numBlackPieces) {
+        this.numBlackPieces = numBlackPieces;
     }
 
-    public int getWhitePieces() {
-        return whitePieces;
+    public int getNumWhitePieces() {
+        return numWhitePieces;
     }
 
-    public void setWhitePieces(int whitePieces) {
-        this.whitePieces = whitePieces;
+    public void setNumWhitePieces(int numWhitePieces) {
+        this.numWhitePieces = numWhitePieces;
     }
 
     public ArrayList<Point> getPossibleMoves() {
@@ -329,5 +329,9 @@ public class Board {
 
     public void setPossibleMoves(ArrayList<Point> possibleMoves) {
         this.possibleMoves = possibleMoves;
+    }
+
+    public boolean squareIsNonEmpty(Point square) {
+        return board.get(square) == SquareState.BLACK || board.get(square) == SquareState.WHITE;
     }
 }
