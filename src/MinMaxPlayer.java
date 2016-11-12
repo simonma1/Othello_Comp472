@@ -10,7 +10,7 @@ public class MinMaxPlayer extends Player {
     @Override
     public HashMap<Point,SquareState> findNextMove(Board updatedBoard, Turn turn) {
         HashMap<Point,SquareState> move = null;
-        ArrayList<Board> nextStates = NextMoveGenerator.generateNextStates(updatedBoard, turn);
+        ArrayList<Board> nextStates = NextMoveGenerator.generateNextStates(updatedBoard);
 
         return move;
     }

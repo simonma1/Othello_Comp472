@@ -8,12 +8,12 @@ public class NextMoveGenerator {
 
     private static int encounteredOppositeColors = 0;
 
-    public static ArrayList<Board> generateNextStates(Board board, Turn turn) {
+    public static ArrayList<Board> generateNextStates(Board board) {
         ArrayList<Board> generatedChildrenStates = new ArrayList<>();
         updatePossibleMoves(board);
         for (Point possibleMove :
                 board.getPossibleMoves()) {
-            if (isValidMove(board, possibleMove, turn)) {
+            if (isValidMove(board, possibleMove, board.getTurn)) {
                 // TODO: 2016-11-12 Need to implement what the method's supposed to do when a move is valid
             }
 

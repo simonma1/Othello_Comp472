@@ -335,4 +335,12 @@ public class Board {
     public boolean squareIsNonEmpty(Point square) {
         return board.get(square) == SquareState.BLACK || board.get(square) == SquareState.WHITE;
     }
+    
+    public Turn getTurn() {
+        return turn;
+    }
+
+    public void setTurn(Turn turn) {
+        this.turn = turn;
+    }
 }
