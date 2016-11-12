@@ -13,7 +13,7 @@ public class NextMoveGenerator {
         updatePossibleMoves(board);
         for (Point possibleMove :
                 board.getPossibleMoves()) {
-            if (isValidMove(board, possibleMove, board.getTurn)) {
+            if (isValidMove(board, possibleMove, board.getTurn())) {
                 // TODO: 2016-11-12 Need to implement what the method's supposed to do when a move is valid
             }
 
