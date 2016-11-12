@@ -43,25 +43,12 @@ public class NextMoveGenerator {
         return isValidMove;
     }
 
-    private static boolean checkValidConditionsRight(Board board, Point possibleMove, Turn turn) {
+    private static boolean checkValidConditionsOver(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
         encounteredOppositeColors = 0;
         // check for valid move conditions to the right of this possible move
         for (int i = (int)possibleMove.getX(); i < Board.BOARD_WIDTH; i++) {
             Point currentPos = new Point(i, (int)possibleMove.getY()); // define the current iterated point
-
-        }
-        return isValidMove;
-    }
-
-    private static boolean checkValidConditionsLeft(Board board, Point possibleMove, Turn turn) {
-        boolean isValidMove = false;
-        encounteredOppositeColors = 0;
-        // check for valid move conditions to the left of this possible move
-        for (int i = (int)possibleMove.getX(); i > 0; i--) {
-            Point currentPos = new Point(i, (int)possibleMove.getY()); // define the current iterated point
-
-           //Should stop as soon as a valid move is found
             isValidMove = generalValidityCheck(board, currentPos, turn);
         }
         return isValidMove;
@@ -70,21 +57,43 @@ public class NextMoveGenerator {
     private static boolean checkValidConditionsUnder(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
         encounteredOppositeColors = 0;
-        // check for valid move conditions under of this possible move
-        for (int i = (int)possibleMove.getY(); i < Board.BOARD_HEIGHT; i++) {
-            Point currentPos = new Point((int)possibleMove.getX(), i); // define the current iterated point
+        // check for valid move conditions to the left of this possible move
+        for (int i = (int)possibleMove.getX(); i > 0; i--) {
+            Point currentPos = new Point(i, (int)possibleMove.getY()); // define the current iterated point
+
+           //Should stop as soon as a valid move is found
             isValidMove = generalValidityCheck(board, currentPos, turn);
+            if(isValidMove){
+                return isValidMove;
+            }
         }
         return isValidMove;
     }
 
-    private static boolean checkValidConditionsOver(Board board, Point possibleMove, Turn turn) {
+    private static boolean checkValidConditionsLeft(Board board, Point possibleMove, Turn turn) {
+        boolean isValidMove = false;
+        encounteredOppositeColors = 0;
+        // check for valid move conditions under of this possible move
+        for (int i = (int)possibleMove.getY(); i < Board.BOARD_HEIGHT; i++) {
+            Point currentPos = new Point((int)possibleMove.getX(), i); // define the current iterated point
+            isValidMove = generalValidityCheck(board, currentPos, turn);
+            if(isValidMove){
+                return isValidMove;
+            }
+        }
+        return isValidMove;
+    }
+
+    private static boolean checkValidConditionsRight(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
         encounteredOppositeColors = 0;
         // check for valid move conditions over of this possible move
         for (int i = (int)possibleMove.getY(); i > 0; i--) {
             Point currentPos = new Point((int)possibleMove.getX(), i); // define the current iterated point
             isValidMove = generalValidityCheck(board, currentPos, turn);
+            if(isValidMove){
+                return isValidMove;
+            }
         }
         return isValidMove;
     }
@@ -96,6 +105,9 @@ public class NextMoveGenerator {
         for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i > 0 && j < Board.BOARD_HEIGHT; i--, j++) {
             Point currentPos = new Point(i, j); // define the current iterated point
             isValidMove = generalValidityCheck(board, currentPos, turn);
+            if(isValidMove){
+                return isValidMove;
+            }
         }
         return isValidMove;
     }
@@ -107,6 +119,9 @@ public class NextMoveGenerator {
         for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i < Board.BOARD_WIDTH && j < Board.BOARD_HEIGHT; i++, j++) {
             Point currentPos = new Point(i, j); // define the current iterated point
             isValidMove = generalValidityCheck(board, currentPos, turn);
+            if(isValidMove){
+                return isValidMove;
+            }
         }
         return isValidMove;
     }
@@ -118,6 +133,9 @@ public class NextMoveGenerator {
         for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i > 0 && j > 0; i--, j--) {
             Point currentPos = new Point(i, j); // define the current iterated point
             isValidMove = generalValidityCheck(board, currentPos, turn);
+            if(isValidMove){
+                return isValidMove;
+            }
         }
         return isValidMove;
     }
@@ -129,6 +147,9 @@ public class NextMoveGenerator {
         for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i < Board.BOARD_WIDTH && j > 0; i++, j--) {
             Point currentPos = new Point(i, j); // define the current iterated point
             isValidMove = generalValidityCheck(board, currentPos, turn);
+            if(isValidMove){
+                return isValidMove;
+            }
         }
         return isValidMove;
     }
