@@ -175,7 +175,8 @@ public class Board {
                     input = keyboard.nextLine();
                     System.out.println(input + " is an invalid input. Please try again");
                 }
-                //When checking if valid move maybe find the point where the user made the move and interface it
+            if(!isValidMove)
+                System.out.println("Your move was invalid");
             }
         return updatedValue;
     }
@@ -261,7 +262,8 @@ public class Board {
     }
 
     private boolean checkIfValidMove(Point point) {//Maybe the check should be done somewhere else
-        return true;
+
+        return NextMoveGenerator.isValidMove(this, point, turn);
     }
 
     private void updateTurn() {

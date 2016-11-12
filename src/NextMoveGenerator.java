@@ -21,7 +21,7 @@ public class NextMoveGenerator {
         return generatedChildrenStates;
     }
 
-    private static boolean isValidMove(Board board, Point possibleMove, Turn turn) {
+    public static boolean isValidMove(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
 
         isValidMove = checkValidConditionsRight(board, possibleMove, turn) ||
