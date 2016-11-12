@@ -10,10 +10,11 @@ public class NextMoveGenerator {
 
     public static ArrayList<Board> generateNextStates(Board board, Turn turn) {
         ArrayList<Board> generatedChildrenStates = new ArrayList<>();
+        updatePossibleMoves(board);
         for (Point possibleMove :
                 board.getPossibleMoves()) {
             if (isValidMove(board, possibleMove, turn)) {
-
+                // TODO: 2016-11-12 Need to implement what the method's supposed to do when a move is valid
             }
 
         }
@@ -24,6 +25,26 @@ public class NextMoveGenerator {
     public static boolean isValidMove(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
 
+        // Checks if the square chosen is a square that's already taken
+        if (board.getBoard().get(possibleMove) == SquareState.BLACK &&
+                board.getBoard().get(possibleMove) == SquareState.WHITE) {
+            return isValidMove;
+        }
+
+        // Checks if the square chosen is an empty square not on the fringe
+        boolean isIsolatedEmptySquare = true;
+        ArrayList<Point> adjacentSquares = getAdjacentSquares(possibleMove);
+        for (Point adjacentSquare :
+                    adjacentSquares) {
+                if (board.getBoard().get(adjacentSquare) != SquareState.EMPTY &&
+                        board.getBoard().get(adjacentSquare) != SquareState.POSSIBLE)
+                    isIsolatedEmptySquare = false;
+        }
+        if (isIsolatedEmptySquare)
+            return isValidMove;
+
+
+        encounteredOppositeColors = 0;
         isValidMove = checkValidConditionsRight(board, possibleMove, turn) ||
                 checkValidConditionsLeft(board, possibleMove, turn) ||
                 checkValidConditionsUnder(board, possibleMove, turn) ||
@@ -33,19 +54,19 @@ public class NextMoveGenerator {
                 checkValidConditionsBottomLeftDiagonal(board, possibleMove, turn) ||
                 checkValidConditionsBottomRightDiagonal(board, possibleMove, turn);
 
-        ArrayList<Point> adjacentSquares = getAdjacentSquares(possibleMove);
-        for (Point adjacentSquare :
-                adjacentSquares) {
+//            ArrayList<Point> adjacentSquares = getAdjacentSquares(possibleMove);
+//            for (Point adjacentSquare :
+//                    adjacentSquares) {
+//
+//            }
+//            board.getBoard().get(possibleMove);
 
-        }
-        board.getBoard().get(possibleMove);
 
         return isValidMove;
     }
 
     private static boolean checkValidConditionsOver(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
-        encounteredOppositeColors = 0;
         // check for valid move conditions to the right of this possible move
         for (int i = (int)possibleMove.getX(); i < Board.BOARD_WIDTH; i++) {
             Point currentPos = new Point(i, (int)possibleMove.getY()); // define the current iterated point
@@ -56,7 +77,6 @@ public class NextMoveGenerator {
 
     private static boolean checkValidConditionsUnder(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
-        encounteredOppositeColors = 0;
         // check for valid move conditions to the left of this possible move
         for (int i = (int)possibleMove.getX(); i > 0; i--) {
             Point currentPos = new Point(i, (int)possibleMove.getY()); // define the current iterated point
@@ -72,7 +92,6 @@ public class NextMoveGenerator {
 
     private static boolean checkValidConditionsLeft(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
-        encounteredOppositeColors = 0;
         // check for valid move conditions under of this possible move
         for (int i = (int)possibleMove.getY(); i < Board.BOARD_HEIGHT; i++) {
             Point currentPos = new Point((int)possibleMove.getX(), i); // define the current iterated point
@@ -86,7 +105,6 @@ public class NextMoveGenerator {
 
     private static boolean checkValidConditionsRight(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
-        encounteredOppositeColors = 0;
         // check for valid move conditions over of this possible move
         for (int i = (int)possibleMove.getY(); i > 0; i--) {
             Point currentPos = new Point((int)possibleMove.getX(), i); // define the current iterated point
@@ -100,7 +118,6 @@ public class NextMoveGenerator {
 
     private static boolean checkValidConditionsTopLeftDiagonal(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
-        encounteredOppositeColors = 0;
         // check for valid move conditions in the top left diagonal of this possible move
         for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i > 0 && j < Board.BOARD_HEIGHT; i--, j++) {
             Point currentPos = new Point(i, j); // define the current iterated point
@@ -114,7 +131,6 @@ public class NextMoveGenerator {
 
     private static boolean checkValidConditionsTopRightDiagonal(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
-        encounteredOppositeColors = 0;
         // check for valid move conditions in the top right diagonal of this possible move
         for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i < Board.BOARD_WIDTH && j < Board.BOARD_HEIGHT; i++, j++) {
             Point currentPos = new Point(i, j); // define the current iterated point
@@ -128,7 +144,6 @@ public class NextMoveGenerator {
 
     private static boolean checkValidConditionsBottomLeftDiagonal(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
-        encounteredOppositeColors = 0;
         // check for valid move conditions in the bottom left diagonal of this possible move
         for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i > 0 && j > 0; i--, j--) {
             Point currentPos = new Point(i, j); // define the current iterated point
@@ -142,7 +157,6 @@ public class NextMoveGenerator {
 
     private static boolean checkValidConditionsBottomRightDiagonal(Board board, Point possibleMove, Turn turn) {
         boolean isValidMove = false;
-        encounteredOppositeColors = 0;
         // check for valid move conditions in the bottom right diagonal of this possible move
         for (int i = (int)possibleMove.getX(), j = (int)possibleMove.getY(); i < Board.BOARD_WIDTH && j > 0; i++, j--) {
             Point currentPos = new Point(i, j); // define the current iterated point
@@ -175,64 +189,79 @@ public class NextMoveGenerator {
         return isValidMove;
     }
 
-    private static ArrayList<Point> getAdjacentSquares(Point possibleMove) {
+    private static ArrayList<Point> getAdjacentSquares(Point square) {
         final int BOARD_LENGTH = 8;
         final int BOARD_HEIGHT = 8;
         ArrayList<Point> adjacentSquares = new ArrayList<>();
 
-        if (possibleMove.getX() - 1 > 0) {
-            if (possibleMove.getY() - 1 > 0) {
+        if (square.getX() - 1 > 0) {
+            if (square.getY() - 1 > 0) {
                 adjacentSquares.add(new Point(
-                        (int) possibleMove.getX() - 1,
-                        (int) possibleMove.getY() - 1
+                        (int) square.getX() - 1,
+                        (int) square.getY() - 1
                 ));
             }
 
             adjacentSquares.add(new Point(
-                    (int) possibleMove.getX() - 1,
-                    (int) possibleMove.getY()
+                    (int) square.getX() - 1,
+                    (int) square.getY()
             ));
 
-            if (possibleMove.getY() + 1 < BOARD_HEIGHT) {
+            if (square.getY() + 1 < BOARD_HEIGHT) {
                 adjacentSquares.add(new Point(
-                        (int) possibleMove.getX() - 1,
-                        (int) possibleMove.getY() + 1
+                        (int) square.getX() - 1,
+                        (int) square.getY() + 1
                 ));
             }
         }
-        if (possibleMove.getX() + 1 < BOARD_LENGTH) {
-            if (possibleMove.getY() - 1 > 0) {
+        if (square.getX() + 1 < BOARD_LENGTH) {
+            if (square.getY() - 1 > 0) {
                 adjacentSquares.add(new Point(
-                        (int) possibleMove.getX() + 1,
-                        (int) possibleMove.getY() - 1
+                        (int) square.getX() + 1,
+                        (int) square.getY() - 1
                 ));
             }
 
             adjacentSquares.add(new Point(
-                    (int) possibleMove.getX() + 1,
-                    (int) possibleMove.getY()
+                    (int) square.getX() + 1,
+                    (int) square.getY()
             ));
 
-            if (possibleMove.getY() + 1 < BOARD_HEIGHT) {
+            if (square.getY() + 1 < BOARD_HEIGHT) {
                 adjacentSquares.add(new Point(
-                        (int) possibleMove.getX() + 1,
-                        (int) possibleMove.getY() + 1
+                        (int) square.getX() + 1,
+                        (int) square.getY() + 1
                 ));
             }
         }
-        if (possibleMove.getY() - 1 > 0) {
+        if (square.getY() - 1 > 0) {
             adjacentSquares.add(new Point(
-                    (int) possibleMove.getX(),
-                    (int) possibleMove.getY() - 1
+                    (int) square.getX(),
+                    (int) square.getY() - 1
             ));
         }
-        if (possibleMove.getY() + 1 < BOARD_HEIGHT) {
+        if (square.getY() + 1 < BOARD_HEIGHT) {
             adjacentSquares.add(new Point(
-                    (int) possibleMove.getX(),
-                    (int) possibleMove.getY() + 1
+                    (int) square.getX(),
+                    (int) square.getY() + 1
             ));
         }
 
         return adjacentSquares;
+    }
+
+    public static void updatePossibleMoves(Board board) {
+        for (int i = 0; i < Board.BOARD_WIDTH; i++) {
+            for (int j = 0; j < Board.BOARD_HEIGHT; j++) {
+                Point thisPoint = new Point(i,j);
+                ArrayList<Point> adjacentSquares = getAdjacentSquares(thisPoint);
+                for (Point adjacentSquare :
+                        adjacentSquares) {
+                    if (board.squareIsNonEmpty(adjacentSquare)) {
+                        // TODO: 2016-11-12  This method is not complete yet.
+                    }
+                }
+            }
+        }
     }
 }
