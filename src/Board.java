@@ -176,6 +176,7 @@ public class Board {
                     System.out.println(input + " is an invalid input. Please try again");
                 }
             if(!isValidMove)
+                input = keyboard.nextLine();
                 System.out.println("Your move was invalid");
             }
         return updatedValue;
@@ -227,7 +228,7 @@ public class Board {
             stringArr[k]=m.group(1);
             k++;
         }
-
+        
         for(int i=0;i<BOARD_HEIGHT;i++){
             for(int j=0;j<BOARD_WIDTH;j++){
                 if(stringArr[i].charAt(j) == 'W'){
