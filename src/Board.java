@@ -177,6 +177,7 @@ public class Board implements Serializable {
 
                 isValidMove = checkIfValidMove(input);
 
+
                 if (isValidMove) {
                     updatedValue = convertStringToMap(input);
                 }
@@ -185,10 +186,11 @@ public class Board implements Serializable {
                     input = keyboard.nextLine();
                     System.out.println(input + " is an invalid input. Please try again");
                 }
-            if(!isValidMove)
+            if(!isValidMove){
                 input = keyboard.nextLine();
                 System.out.println("Your move was invalid");
             }
+        }
         return updatedValue;
     }
 
