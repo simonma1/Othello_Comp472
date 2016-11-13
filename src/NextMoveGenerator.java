@@ -16,8 +16,16 @@ public class NextMoveGenerator {
             for (int j = 0; j < Board.BOARD_HEIGHT; j++) {
                 Point currentSquare = new Point(i,j);
                 if (isValidMove(board, currentSquare, board.getTurn())) {
-                    // TODO: 2016-11-13 clone the current board
-                    // TODO: 2016-11-13 add the valid move to the cloned board
+                    // Clone the board
+                    Board generatedChildState = board.clone();
+
+                    // Add the point to the board
+                    if (board.getTurn() == Turn.BLACK) {
+                        generatedChildState.getBoard().put(currentSquare, SquareState.BLACK);
+                    }
+                    else {
+                        generatedChildState.getBoard().put(currentSquare, SquareState.WHITE);
+                    }
                     // TODO: 2016-11-13 change the colors of the pieces of those affected by the added move
                     // TODO: 2016-11-13 add the changed state to the list of generated states
                 }
