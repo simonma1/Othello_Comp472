@@ -71,6 +71,9 @@ public class NextMoveGenerator {
         for (int i = (int)possibleMove.getX(); i < Board.BOARD_WIDTH; i++) {
             Point currentPos = new Point(i, (int)possibleMove.getY()); // define the current iterated point
             isValidMove = generalValidityCheck(board, currentPos, turn);
+            if(isValidMove){
+                return isValidMove;
+            }
         }
         return isValidMove;
     }

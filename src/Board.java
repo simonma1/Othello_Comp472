@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Simon on 2016-11-07.
  */
-public class Board {
+public class Board implements Serializable {
 
     private Player playerOne;
     private Player playerTwo;
@@ -68,11 +69,16 @@ public class Board {
 
         System.out.println(this.toString());
 
-        play();
+        try {
+            play();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void play(){
+    private void play() throws CloneNotSupportedException {
         HashMap<Point, SquareState> updatedBoardValue= null;
+        Board previous = null;
         while(!gameOver){
             if (playerOne.getColor() == turn){
                // updatedBoardValue = playerOne.findNextMove(this);//Maybe pass the hashmap instead
@@ -80,13 +86,17 @@ public class Board {
                 if(playerTwo != null){
                    // updatedBoardValue playerTwo.findNextMove(this);
                 }else{//PlayerTwo is human
+                     previous = (Board) this.clone();
                     updatedBoardValue = getNextMoveFromInput();
                 }
             }
 
+
             updateBoard(updatedBoardValue);
             System.out.println("Here is the state of the board after the turn: ");
             System.out.println(this.toString());
+            System.out.println("The cloned board");
+            System.out.println(previous.toString());
             gameOver = checkIfGameOver();
             if(!gameOver){
                 updateTurn();
@@ -306,6 +316,24 @@ public class Board {
         }
         res += ")";
         return res;
+    }
+
+    /*
+    * Deep copies the board object using Serialization
+    * */
+    public Board clone(){
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(this);
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return (Board) ois.readObject();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public int getNumBlackPieces() {

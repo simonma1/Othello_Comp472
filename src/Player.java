@@ -1,7 +1,8 @@
 import java.awt.*;
+import java.io.Serializable;
 import java.util.HashMap;
 
-public abstract class Player {
+public abstract class Player implements Serializable{
 
     private HeuristicCalculator heuristicCalculator;
     private Board board;
