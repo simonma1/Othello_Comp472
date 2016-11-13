@@ -77,7 +77,7 @@ public class Board implements Serializable {
     }
 
     private void play() throws CloneNotSupportedException {
-        HashMap<Point, SquareState> updatedBoardValue= null;
+        HashMap<Point, SquareState> updatedBoardValue = null;
         Board previous = null;
         while(!gameOver){
             if (playerOne.getColor() == turn){
