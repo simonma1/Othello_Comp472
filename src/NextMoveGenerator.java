@@ -26,8 +26,8 @@ public class NextMoveGenerator {
                     else {
                         generatedChildState.getBoard().put(currentSquare, SquareState.WHITE);
                     }
-                    // TODO: 2016-11-13 change the colors of the pieces of those affected by the added move
-                    // TODO: 2016-11-13 add the changed state to the list of generated states
+                    ColourChangingService.changeColours(generatedChildState, currentSquare);
+                    generatedChildrenStates.add(generatedChildState);
                 }
             }
         }
