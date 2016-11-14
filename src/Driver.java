@@ -4,7 +4,7 @@
 public class Driver {
     public static void main(String[] args) {
 
-        Player p1 = new MinMaxPlayer();
+        Player p1 = new MiniMaxPlayer();
         Board board = new Board(p1);
 
         board.startNewGame();

@@ -1,6 +1,3 @@
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -18,7 +15,7 @@ public class MiniMaxPlayer extends Player {
     // TODO: 2016-11-14 When creating children initialize their alpha beta value to those of the parent
 
 
-    private Node current;
+    private Node root;
     private final int DEPTH = 3;
 
 
@@ -27,11 +24,11 @@ public class MiniMaxPlayer extends Player {
     }
 
     public void findChildren(){
-        findChildren(current);
+        findChildren(root);
     }
 
     public void updateCurrent(Node newRoot){
-        this.current = newRoot;
+        this.root = newRoot;
 
     }
 
@@ -48,4 +45,27 @@ public class MiniMaxPlayer extends Player {
         }
     }
 
+    @Override
+    public Board executifyMove(Board currentBoard) {
+        root.setBoardValue(currentBoard);
+        doMiniMax(root);
+
+        return null;
+    }
+
+    private void doMiniMax(Node root) {
+        findBestChildHeuristicValue(root);
+    }
+
+    private Board findBestChildHeuristicValue(Node root) {
+        int highestHeuristicValue = Constant.MINALPHAVALUE;
+        Board bestBoardAssociatedWithHighestHeuristicValue = null;
+        for (Node child : root.getChildren()) {
+            if (child.getMiniMaxValue() > highestHeuristicValue ) {
+                highestHeuristicValue = child.getMiniMaxValue();
+                bestBoardAssociatedWithHighestHeuristicValue = child.getBoardValue();
+            }
+        }
+        return bestBoardAssociatedWithHighestHeuristicValue;
+    }
 }

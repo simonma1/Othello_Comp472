@@ -38,4 +38,12 @@ public class Node {
     public void setBoardValue(Board boardValue) {
         this.boardValue = boardValue;
     }
+
+    public int getMiniMaxValue() {
+        return miniMaxValue;
+    }
+
+    public void setMiniMaxValue(int miniMaxValue) {
+        this.miniMaxValue = miniMaxValue;
+    }
 }

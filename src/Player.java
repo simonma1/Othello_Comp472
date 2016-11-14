@@ -5,7 +5,6 @@ import java.util.HashMap;
 public abstract class Player implements Serializable{
 
     private HeuristicCalculator heuristicCalculator;
-    private Board board;
     private Turn color;
 
 
@@ -13,6 +12,7 @@ public abstract class Player implements Serializable{
 
     }
 
+    public abstract Board executifyMove(Board currentBoard);
 
     public Turn getColor() {
         return color;
@@ -21,5 +21,6 @@ public abstract class Player implements Serializable{
     public void setColor(Turn color) {
         this.color = color;
     }
+
 
 }
