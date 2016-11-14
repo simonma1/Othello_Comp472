@@ -13,8 +13,6 @@ public abstract class Player implements Serializable{
 
     }
 
-    public abstract HashMap<Point,SquareState> findNextMove(Board updatedBoard, Turn turn);
-
 
     public Turn getColor() {
         return color;
