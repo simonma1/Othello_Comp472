@@ -8,10 +8,7 @@ import java.util.HashMap;
 public class GreedyPlayer extends Player {
 
     @Override
-    public HashMap<Point,SquareState> findNextMove(Board updatedBoard, Turn turn) {
-        HashMap<Point,SquareState> move = null;
-        ArrayList<Board> nextStates = NextMoveGenerator.generateNextStates(updatedBoard);
-
-        return move;
+    public Board executifyMove(Board currentBoard) {
+        return null;
     }
 }

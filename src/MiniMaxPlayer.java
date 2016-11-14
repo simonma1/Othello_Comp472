@@ -50,11 +50,12 @@ public class MiniMaxPlayer extends Player {
         root.setBoardValue(currentBoard);
         doMiniMax(root);
 
+        findBestChildHeuristicValue(root);
         return null;
     }
 
     private void doMiniMax(Node root) {
-        findBestChildHeuristicValue(root);
+
     }
 
     private Board findBestChildHeuristicValue(Node root) {
