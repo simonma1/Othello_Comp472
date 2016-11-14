@@ -25,7 +25,7 @@ public class Node {
         this.depth = 0;
     }
 
-    public void add(Node child){
+    public void addChild(Node child){
         children.add(child);
     }
 
