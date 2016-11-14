@@ -15,16 +15,14 @@ public class Node {
     private int miniMaxValue;
     private int depth; //Even for max odd for min
 
-    public Node(int depth){
+    public Node(Board board, int depth){
         this.depth = depth;
-    }
-    
-    public Node() {
-        this.depth = 0;
+        this.depth = depth;
     }
 
     public Node(Board board){
         this.boardValue = board;
+        this.depth = 0;
     }
 
     public void add(Node child){
