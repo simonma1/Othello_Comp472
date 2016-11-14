@@ -48,4 +48,12 @@ public class Node {
     public void setMiniMaxValue(int miniMaxValue) {
         this.miniMaxValue = miniMaxValue;
     }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
 }
