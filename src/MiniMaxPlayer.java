@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -17,6 +18,7 @@ public class MiniMaxPlayer extends Player {
 
     private Node root;
     private final int DEPTH = 3;
+    LinkedList<Node> frontier = new LinkedList<Node>();//Our stack
 
 
     public void findChildren(Node node){
@@ -48,13 +50,23 @@ public class MiniMaxPlayer extends Player {
     @Override
     public Board executifyMove(Board currentBoard) {
         root.setBoardValue(currentBoard);
-        doMiniMax(root);
+        doMiniMaxSearch(root);
 
         findBestChildHeuristicValue(root);
         return null;
     }
 
-    private void doMiniMax(Node root) {
+    private void doMiniMaxSearch(Node root) {
+        ArrayList<Board> nextMoves = NextMoveGenerator.generateNextStates(root.getBoardValue());
+
+        //Creates child of the root and adds them to the frontier
+        for (Board move : nextMoves) {
+            Node child = new Node(move, root.getDepth());
+            root.addChild(child);
+            frontier.add(child);
+        }
+
+
 
     }
 
