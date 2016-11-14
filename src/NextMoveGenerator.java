@@ -10,7 +10,7 @@ public class NextMoveGenerator {
 
     public static ArrayList<Board> generateNextStates(Board board) {
         ArrayList<Board> generatedChildrenStates = new ArrayList<>();
-        updatePossibleMoves(board);
+//        updatePossibleMoves(board);
 
         for (int i = 0; i < Board.BOARD_WIDTH; i++) {
             for (int j = 0; j < Board.BOARD_HEIGHT; j++) {
@@ -39,7 +39,7 @@ public class NextMoveGenerator {
         boolean isValidMove = false;
 
         // Checks if the square chosen is a square that's already taken
-        if (board.getBoard().get(possibleMove) == SquareState.BLACK &&
+        if (board.getBoard().get(possibleMove) == SquareState.BLACK ||
                 board.getBoard().get(possibleMove) == SquareState.WHITE) {
             return isValidMove;
         }
