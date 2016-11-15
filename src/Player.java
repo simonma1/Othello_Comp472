@@ -22,5 +22,11 @@ public abstract class Player implements Serializable{
         this.color = color;
     }
 
+    public HeuristicCalculator getHeuristicCalculator() {
+        return heuristicCalculator;
+    }
 
+    public void setHeuristicCalculator(HeuristicCalculator heuristicCalculator) {
+        this.heuristicCalculator = heuristicCalculator;
+    }
 }
