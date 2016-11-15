@@ -81,4 +81,30 @@ public class MiniMaxPlayer extends Player {
         }
         return bestBoardAssociatedWithHighestHeuristicValue;
     }
+
+    public void generateMiniMaxTree() {
+        // TODO: 2016-11-15 create a stack S to hold nodes
+        // TODO: 2016-11-15 S.push(root) push the root node on top of the stack
+        // TODO: 2016-11-15 while (!S.isEmpty() the stack is not empty) {
+        // TODO: 2016-11-15     if (S.top().getDepth() == 3 depth of Node on top of stack == 3) {
+        // TODO: 2016-11-15         S.top().setMiniMaxValue(calculateHeuristicValue(S.top().getBoardValue()));
+        // TODO: 2016-11-15         S.pop();   pop the this node since we're done with it
+        // TODO: 2016-11-15     }
+        // TODO: 2016-11-15     else {
+        // TODO: 2016-11-15         if (S.top().getChildren() == null Node on top of stack has no children) {
+        // TODO: 2016-11-15             children = generateChildren();
+        // TODO: 2016-11-15             for each child in children {
+        // TODO: 2016-11-15                 S.top().addChild(child);
+        // TODO: 2016-11-15                 child.setParent(S.top());
+        // TODO: 2016-11-15                 S.push(child);
+        // TODO: 2016-11-15             }
+        // TODO: 2016-11-15         }
+        // TODO: 2016-11-15         else {
+        // TODO: 2016-11-15             S.pop() pop this parent node from top of stack
+        // TODO: 2016-11-15         }
+        // TODO: 2016-11-15     }
+        // TODO: 2016-11-15 }
+
+
+    }
 }
