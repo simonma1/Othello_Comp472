@@ -31,72 +31,76 @@ public class MiniMaxPlayer extends Player {
         root = new Node(currentBoard);
         generateNodes(root);
         Node current = null;
+        Board nextBoard = null;
 
-        while(!stack.isEmpty()){
+        while(!stack.isEmpty()) {
             current = stack.pop();//Removes the last node added to the stack
             Node parent = current.getParent();//add check if parent is null meaning we are back to the root
 
-            if(current.getDepth() == MINIMAXDEPTH  && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE){//The current node is a leaf and its parent's value hasn't been defined
-                int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
-                current.setMiniMaxValue(heuristicValue);
-                parent.setMiniMaxValue(heuristicValue);
+            if (parent == null) {
+                nextBoard = findBestChildHeuristicValue(root);
+            } else {
+                if (current.getDepth() == MINIMAXDEPTH && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE) {//The current node is a leaf and its parent's value hasn't been defined
+                    int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
+                    current.setMiniMaxValue(heuristicValue);
+                    parent.setMiniMaxValue(heuristicValue);
 
-                if(current.isMaxNode()){
-                    parent.setAlpha(heuristicValue);
-                }else{
-                    parent.setBeta(heuristicValue);
-                }
-
-            }else if(current.getDepth() == MINIMAXDEPTH){//Node is a leaf node but the value of the parent has already been updated
-                int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
-                current.setMiniMaxValue(heuristicValue);
-
-                if(parent.isMaxNode()){
-                    if(heuristicValue > parent.getMiniMaxValue()){
-                        parent.setMiniMaxValue(heuristicValue);
+                    if (current.isMaxNode()) {
                         parent.setAlpha(heuristicValue);
-                    }
-                }else{//parent is a min node
-                    if (heuristicValue < parent.getMiniMaxValue()){
-                        parent.setMiniMaxValue(heuristicValue);
+                    } else {
                         parent.setBeta(heuristicValue);
                     }
-                }
 
-            }else if (Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE && Math.abs(current.getMiniMaxValue())!= Constant.MAXBETAVALUE){//Not a leaf node and the parent does't have a value set
-                int currentValue = current.getMiniMaxValue();
-                parent.setMiniMaxValue(currentValue);
+                } else if (current.getDepth() == MINIMAXDEPTH) {//Node is a leaf node but the value of the parent has already been updated
+                    int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
+                    current.setMiniMaxValue(heuristicValue);
 
-                if (parent.isMaxNode()){
-                    parent.setAlpha(currentValue);
-                }else{
-                    parent.setBeta(currentValue);
-                }
-
-            }else if(Math.abs(current.getMiniMaxValue()) == Constant.MAXBETAVALUE){//Case when no heuristic value has been given for this part of the tree which is not a node
-                current.setAlpha(parent.getAlpha());
-                current.setBeta(parent.getBeta());
-                stack.push(current);//re-add the current node on the stack for when will come back up the tree
-                generateNodes(current);
-
-            }else if(Math.abs(current.getMiniMaxValue()) != Constant.MAXBETAVALUE && Math.abs(parent.getMiniMaxValue()) != Constant.MAXBETAVALUE){//cases where we need to compare the parent's value with the child's to see the one that would be selected
-                int currentValue = current.getMiniMaxValue();
-                if(parent.isMaxNode()){
-                    if (currentValue > parent.getMiniMaxValue()){
-                        parent.setMiniMaxValue(currentValue);
-                        parent.setAlpha(currentValue);
+                    if (parent.isMaxNode()) {
+                        if (heuristicValue > parent.getMiniMaxValue()) {
+                            parent.setMiniMaxValue(heuristicValue);
+                            parent.setAlpha(heuristicValue);
+                        }
+                    } else {//parent is a min node
+                        if (heuristicValue < parent.getMiniMaxValue()) {
+                            parent.setMiniMaxValue(heuristicValue);
+                            parent.setBeta(heuristicValue);
+                        }
                     }
-                } else {
-                    if(currentValue < parent.getMiniMaxValue()){
-                        parent.setMiniMaxValue(currentValue);
+
+                } else if (Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE && Math.abs(current.getMiniMaxValue()) != Constant.MAXBETAVALUE) {//Not a leaf node and the parent does't have a value set
+                    int currentValue = current.getMiniMaxValue();
+                    parent.setMiniMaxValue(currentValue);
+
+                    if (parent.isMaxNode()) {
+                        parent.setAlpha(currentValue);
+                    } else {
                         parent.setBeta(currentValue);
+                    }
+
+                } else if (Math.abs(current.getMiniMaxValue()) == Constant.MAXBETAVALUE) {//Case when no heuristic value has been given for this part of the tree which is not a node
+                    current.setAlpha(parent.getAlpha());
+                    current.setBeta(parent.getBeta());
+                    stack.push(current);//re-add the current node on the stack for when will come back up the tree
+                    generateNodes(current);
+
+                } else if (Math.abs(current.getMiniMaxValue()) != Constant.MAXBETAVALUE && Math.abs(parent.getMiniMaxValue()) != Constant.MAXBETAVALUE) {//cases where we need to compare the parent's value with the child's to see the one that would be selected
+                    int currentValue = current.getMiniMaxValue();
+                    if (parent.isMaxNode()) {
+                        if (currentValue > parent.getMiniMaxValue()) {
+                            parent.setMiniMaxValue(currentValue);
+                            parent.setAlpha(currentValue);
+                        }
+                    } else {
+                        if (currentValue < parent.getMiniMaxValue()) {
+                            parent.setMiniMaxValue(currentValue);
+                            parent.setBeta(currentValue);
+                        }
                     }
                 }
             }
         }
 
-        findBestChildHeuristicValue(root);
-        return null;
+        return nextBoard;
     }
 
     //Adds all element from the node provided to the left-most leaves to the stack
@@ -123,15 +127,13 @@ public class MiniMaxPlayer extends Player {
 
     //Probably delete
     private Board findBestChildHeuristicValue(Node root) {
-        int highestHeuristicValue = Constant.MINALPHAVALUE;
-        Board bestBoardAssociatedWithHighestHeuristicValue = null;
+        Board nextBoard = null;
         for (Node child : root.getChildren()) {
-            if (child.getMiniMaxValue() > highestHeuristicValue ) {
-                highestHeuristicValue = child.getMiniMaxValue();
-                bestBoardAssociatedWithHighestHeuristicValue = child.getBoardValue();
+            if (child.getMiniMaxValue()==root.getMiniMaxValue() ) {
+                nextBoard = child.getBoardValue();
             }
         }
-        return bestBoardAssociatedWithHighestHeuristicValue;
+        return nextBoard;
     }
 
 
