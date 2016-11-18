@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public abstract class Player implements Serializable{
 
-    private HeuristicCalculator heuristicCalculator;
+    protected HeuristicCalculator heuristicCalculator;
     private Turn color;
 
 

@@ -98,4 +98,12 @@ public class Node {
             this.miniMaxValue = Constant.MAXBETAVALUE;
         }
     }
+
+    public boolean isMaxNode() {
+        if (this.depth % 2 == 0) {//Max Node
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

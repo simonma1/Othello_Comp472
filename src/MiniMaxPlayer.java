@@ -6,6 +6,10 @@ import java.util.LinkedList;
  */
 public class MiniMaxPlayer extends Player {
 
+    /*
+    Potential problem: Watch out that the color whose turn it is is known by the heuristic calculator
+    */
+
     // TODO: 2016-11-14 Create children of root
     // TODO: 2016-11-14  Create children of first child and add them to fringe
     // TODO: 2016-11-14 Repeat until depth reached
@@ -33,7 +37,17 @@ public class MiniMaxPlayer extends Player {
             Node parent = current.getParent();
 
             if(current.getDepth() == MINIMAXDEPTH  && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE){//The current node is a leaf and its parent's value hasn't been defined
+                int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
+                current.setMiniMaxValue(heuristicValue);
+                parent.setMiniMaxValue(heuristicValue);
 
+                if(current.isMaxNode()){
+                    parent.setAlpha(heuristicValue);
+                }else{
+                    parent.setBeta(heuristicValue);
+                }
+            }else if(current.getDepth() == MINIMAXDEPTH){//Node is a leaf node but the value of the parent has already been updated
+                
             }
         }
 
