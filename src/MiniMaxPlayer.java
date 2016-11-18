@@ -62,6 +62,16 @@ public class MiniMaxPlayer extends Player {
                         parent.setBeta(heuristicValue);
                     }
                 }
+
+            }else if (Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE && Math.abs(current.getMiniMaxValue())!= Constant.MAXBETAVALUE){//Not a leaf node and the parent does't have a value set
+                int currentValue = current.getMiniMaxValue();
+                parent.setMiniMaxValue(currentValue);
+
+                if (parent.isMaxNode()){
+                    parent.setAlpha(currentValue);
+                }else{
+                    parent.setBeta(currentValue);
+                }
             }
         }
 
