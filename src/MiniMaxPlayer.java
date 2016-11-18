@@ -72,6 +72,12 @@ public class MiniMaxPlayer extends Player {
                 }else{
                     parent.setBeta(currentValue);
                 }
+
+            }else if(Math.abs(current.getMiniMaxValue()) == Constant.MAXBETAVALUE){//Case when no heuristic value has been given for this part of the tree which is not a node
+                current.setAlpha(parent.getAlpha());
+                current.setBeta(parent.getBeta());
+                stack.push(current);//re-add the current node on the stack for when will come back up the tree
+                generateNodes(current);
             }
         }
 
