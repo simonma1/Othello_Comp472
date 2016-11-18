@@ -23,6 +23,7 @@ public class Node {
     public Node(Board board){
         this.boardValue = board;
         this.depth = 0;
+        this.miniMaxValue = Integer.MIN_VALUE;
     }
 
     public Node(Board board, int depth, Node parent, int alpha, int beta){
@@ -80,5 +81,21 @@ public class Node {
 
     public void setBeta(int beta) {
         this.beta = beta;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    public void setDefaultMiniMaxValue(){
+        if(this.depth % 2 == 0) {//Max Node
+            this.miniMaxValue = Constant.MINALPHAVALUE;
+        }else{
+            this.miniMaxValue = Constant.MAXBETAVALUE;
+        }
     }
 }

@@ -26,6 +26,16 @@ public class MiniMaxPlayer extends Player {
     public Board executifyMove(Board currentBoard) {
         root = new Node(currentBoard);
         generateNodes(root);
+        Node current = null;
+
+        while(!stack.isEmpty()){
+            current = stack.pop();//Removes the last node added to the stack
+            Node parent = current.getParent();
+
+            if(current.getDepth() == MINIMAXDEPTH  && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE){//The current node is a leaf and its parent's value hasn't been defined
+
+            }
+        }
 
         findBestChildHeuristicValue(root);
         return null;
@@ -42,6 +52,7 @@ public class MiniMaxPlayer extends Player {
             for (Board move : nextMoves) {
                 Node child = new Node(move, current.getDepth() + 1, current, current.getAlpha(), current.getBeta());
                 current.addChild(child);
+                current.setDefaultMiniMaxValue();
                 stack.push(child);//Inserts the element as the first of the list
             }
 
