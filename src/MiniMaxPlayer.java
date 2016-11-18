@@ -78,6 +78,20 @@ public class MiniMaxPlayer extends Player {
                 current.setBeta(parent.getBeta());
                 stack.push(current);//re-add the current node on the stack for when will come back up the tree
                 generateNodes(current);
+
+            }else if(Math.abs(current.getMiniMaxValue()) != Constant.MAXBETAVALUE && Math.abs(parent.getMiniMaxValue()) != Constant.MAXBETAVALUE){//cases where we need to compare the parent's value with the child's to see the one that would be selected
+                int currentValue = current.getMiniMaxValue();
+                if(parent.isMaxNode()){
+                    if (currentValue > parent.getMiniMaxValue()){
+                        parent.setMiniMaxValue(currentValue);
+                        parent.setAlpha(currentValue);
+                    }
+                } else {
+                    if(currentValue < parent.getMiniMaxValue()){
+                        parent.setMiniMaxValue(currentValue);
+                        parent.setBeta(currentValue);
+                    }
+                }
             }
         }
 
