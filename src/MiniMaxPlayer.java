@@ -34,7 +34,7 @@ public class MiniMaxPlayer extends Player {
 
         while(!stack.isEmpty()){
             current = stack.pop();//Removes the last node added to the stack
-            Node parent = current.getParent();
+            Node parent = current.getParent();//add check if parent is null meaning we are back to the root
 
             if(current.getDepth() == MINIMAXDEPTH  && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE){//The current node is a leaf and its parent's value hasn't been defined
                 int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
@@ -46,8 +46,22 @@ public class MiniMaxPlayer extends Player {
                 }else{
                     parent.setBeta(heuristicValue);
                 }
+
             }else if(current.getDepth() == MINIMAXDEPTH){//Node is a leaf node but the value of the parent has already been updated
-                
+                int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
+                current.setMiniMaxValue(heuristicValue);
+
+                if(parent.isMaxNode()){
+                    if(heuristicValue > parent.getMiniMaxValue()){
+                        parent.setMiniMaxValue(heuristicValue);
+                        parent.setAlpha(heuristicValue);
+                    }
+                }else{//parent is a min node
+                    if (heuristicValue < parent.getMiniMaxValue()){
+                        parent.setMiniMaxValue(heuristicValue);
+                        parent.setBeta(heuristicValue);
+                    }
+                }
             }
         }
 
