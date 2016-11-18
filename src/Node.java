@@ -25,6 +25,15 @@ public class Node {
         this.depth = 0;
     }
 
+    public Node(Board board, int depth, Node parent, int alpha, int beta){
+        this.depth = depth;
+        this.depth = depth;
+        this.parent = parent;
+        this.alpha = alpha;
+        this.beta = beta;
+    }
+
+
     public void addChild(Node child){
         children.add(child);
     }
@@ -55,5 +64,21 @@ public class Node {
 
     public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
+    }
+
+    public int getBeta() {
+        return beta;
+    }
+
+    public void setBeta(int beta) {
+        this.beta = beta;
     }
 }

@@ -17,59 +17,42 @@ public class MiniMaxPlayer extends Player {
 
 
     private Node root;
-    private final int DEPTH = 3;
-    LinkedList<Node> frontier = new LinkedList<Node>();//Our stack
+    private final int MINIMAXDEPTH = 3;
+    LinkedList<Node> stack = new LinkedList<Node>();//Our stack
 
 
-    public void findChildren(Node node){
-
-    }
-
-    public void findChildren(){
-        findChildren(root);
-    }
-
-    public void updateCurrent(Node newRoot){
-        this.root = newRoot;
-
-    }
-
-
-
-
-    public void generateTree(){
-        int currentHeight = 0;
-        LinkedList<Node> frontier = new LinkedList<Node>();
-
-
-        for(int i=0;i<DEPTH;i++){
-
-        }
-    }
 
     @Override
     public Board executifyMove(Board currentBoard) {
-        root.setBoardValue(currentBoard);
-        doMiniMaxSearch(root);
+        root = new Node(currentBoard);
+        generateNodes(root);
 
         findBestChildHeuristicValue(root);
         return null;
     }
 
-    private void doMiniMaxSearch(Node root) {
-        ArrayList<Board> nextMoves = NextMoveGenerator.generateNextStates(root.getBoardValue());
+    //Adds all element from the node provided to the left-most leaves to the stack
+    private void generateNodes(Node root) {
+        Node current = root;
+        ArrayList<Board> nextMoves = null;
 
-        //Creates child of the root and adds them to the frontier
-        for (Board move : nextMoves) {
-            Node child = new Node(move, root.getDepth());
-            root.addChild(child);
-            frontier.add(child);
+        while(current.getDepth() != MINIMAXDEPTH) {
+            nextMoves = NextMoveGenerator.generateNextStates(current.getBoardValue());
+            //Creates child of the current node and adds them to the stack
+            for (Board move : nextMoves) {
+                Node child = new Node(move, current.getDepth() + 1, current, current.getAlpha(), current.getBeta());
+                current.addChild(child);
+                stack.push(child);//Inserts the element as the first of the list
+            }
+
+            current = stack.peekFirst();//Last element added
         }
-
 
 
     }
 
+
+    //Probably delete
     private Board findBestChildHeuristicValue(Node root) {
         int highestHeuristicValue = Constant.MINALPHAVALUE;
         Board bestBoardAssociatedWithHighestHeuristicValue = null;
@@ -82,29 +65,5 @@ public class MiniMaxPlayer extends Player {
         return bestBoardAssociatedWithHighestHeuristicValue;
     }
 
-    public void generateMiniMaxTree() {
-        // TODO: 2016-11-15 create a stack S to hold nodes
-        // TODO: 2016-11-15 S.push(root) push the root node on top of the stack
-        // TODO: 2016-11-15 while (!S.isEmpty() the stack is not empty) {
-        // TODO: 2016-11-15     if (S.top().getDepth() == 3 depth of Node on top of stack == 3) {
-        // TODO: 2016-11-15         S.top().setMiniMaxValue(calculateHeuristicValue(S.top().getBoardValue()));
-        // TODO: 2016-11-15         S.pop();   pop the this node since we're done with it
-        // TODO: 2016-11-15     }
-        // TODO: 2016-11-15     else {
-        // TODO: 2016-11-15         if (S.top().getChildren() == null Node on top of stack has no children) {
-        // TODO: 2016-11-15             children = generateChildren();
-        // TODO: 2016-11-15             for each child in children {
-        // TODO: 2016-11-15                 S.top().addChild(child);
-        // TODO: 2016-11-15                 child.setParent(S.top());
-        // TODO: 2016-11-15                 S.push(child);
-        // TODO: 2016-11-15             }
-        // TODO: 2016-11-15         }
-        // TODO: 2016-11-15         else {
-        // TODO: 2016-11-15             S.pop() pop this parent node from top of stack
-        // TODO: 2016-11-15         }
-        // TODO: 2016-11-15     }
-        // TODO: 2016-11-15 }
 
-
-    }
 }
