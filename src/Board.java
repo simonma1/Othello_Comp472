@@ -42,7 +42,7 @@ public class Board implements Serializable {
 
     public Board(Player p1){
         playerOne = p1;
-        playerOne.setColor(Turn.WHITE);
+        playerOne.setColor(Turn.BLACK);
     }
 
     public Board(Player p1, Player p2){
@@ -81,7 +81,7 @@ public class Board implements Serializable {
         Board previous = null;
         while(!gameOver){
             if (playerOne.getColor() == turn){
-               // updatedBoardValue = playerOne.findNextMove(this);//Maybe pass the hashmap instead
+               updatedBoardValue = playerOne.executifyMove(this).getBoard();//Maybe pass the hashmap instead
             }else{
                 if(playerTwo != null){
                    // updatedBoardValue playerTwo.findNextMove(this);

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * Created by Harrison on 2016-11-07.
@@ -32,6 +33,7 @@ public class MiniMaxPlayer extends Player {
         generateNodes(root);
         Node current = null;
         Board nextBoard = null;
+        Random rand = new Random();
 
         while(!stack.isEmpty()) {
             current = stack.pop();//Removes the last node added to the stack
@@ -41,7 +43,8 @@ public class MiniMaxPlayer extends Player {
                 nextBoard = findBestChildHeuristicValue(root);
             } else {
                 if (current.getDepth() == MINIMAXDEPTH && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE) {//The current node is a leaf and its parent's value hasn't been defined
-                    int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
+                    //int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
+                    int heuristicValue = rand.nextInt(150);
                     current.setMiniMaxValue(heuristicValue);
                     parent.setMiniMaxValue(heuristicValue);
 
@@ -113,6 +116,7 @@ public class MiniMaxPlayer extends Player {
             //Creates child of the current node and adds them to the stack
             for (Board move : nextMoves) {
                 Node child = new Node(move, current.getDepth() + 1, current, current.getAlpha(), current.getBeta());
+                System.out.println("fdsf" + child.getBoardValue().toString());
                 current.addChild(child);
                 current.setDefaultMiniMaxValue();
                 stack.push(child);//Inserts the element as the first of the list

@@ -1,12 +1,13 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Simon on 2016-11-13.
  */
-public class Node {
+public class Node implements Serializable{
 
     private Node parent = null;
-    private ArrayList<Node> children = null;
+    private ArrayList<Node> children = new ArrayList<Node>();
     private Board boardValue = null;
 
 
@@ -27,7 +28,7 @@ public class Node {
     }
 
     public Node(Board board, int depth, Node parent, int alpha, int beta){
-        this.depth = depth;
+        this.boardValue = board;
         this.depth = depth;
         this.parent = parent;
         this.alpha = alpha;
