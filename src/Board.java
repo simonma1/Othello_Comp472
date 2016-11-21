@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -20,6 +19,8 @@ public class Board implements Serializable {
     private boolean noMovesAvailable = false;
     private int numBlackPieces = 2;
     private int numWhitePieces = 2;
+    private ArrayList<Point> blackPieces = new ArrayList<>();
+    private ArrayList<Point> whitePieces = new ArrayList<>();
 
     public static final int BOARD_WIDTH = 8;
     public static final int BOARD_HEIGHT = 8;
@@ -60,6 +61,12 @@ public class Board implements Serializable {
                 board.put(currentPoint,SquareState.EMPTY);
             }
         }
+
+        //Initializes the list of white and black positions
+        whitePieces.add(new Point(3,3));
+        blackPieces.add(new Point(3,4));
+        whitePieces.add(new Point(4,3));
+        blackPieces.add(new Point(4,4));
 
         //Puts the 4 initial pieces on the board
         board.put(new Point(3,3),SquareState.WHITE);
@@ -277,7 +284,7 @@ public class Board implements Serializable {
 
     private boolean checkIfValidMove(Point point) {//Maybe the check should be done somewhere else
 
-        return NextMoveGenerator.isValidMove(this, point, turn);
+        return NextMoveGenerator.isValidMoveStartingFromEmpty(this, point, turn);
     }
 
     private void updateTurn() {
@@ -373,5 +380,21 @@ public class Board implements Serializable {
 
     public void setTurn(Turn turn) {
         this.turn = turn;
+    }
+
+    public void addWhitePiece(Point move) {
+        whitePieces.add(move);
+    }
+
+    public void addBlackPiece(Point move) {
+        blackPieces.add(move);
+    }
+
+    public ArrayList<Point> getBlackPieces() {
+        return blackPieces;
+    }
+
+    public ArrayList<Point> getWhitePieces() {
+        return whitePieces;
     }
 }
