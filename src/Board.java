@@ -42,7 +42,7 @@ public class Board implements Serializable {
 
     public Board(Player p1){
         playerOne = p1;
-        playerOne.setColor(Turn.BLACK);
+        playerOne.setColor(Turn.WHITE);
     }
 
     public Board(Player p1, Player p2){
@@ -81,7 +81,7 @@ public class Board implements Serializable {
         Board previous = null;
         while(!gameOver){
             if (playerOne.getColor() == turn){
-               updatedBoardValue = playerOne.executifyMove(this).getBoard();//Maybe pass the hashmap instead
+               updatedBoardValue = playerOne.executifyMove(this.clone()).getBoard();//Maybe pass the hashmap instead
                 System.out.println("DSDDDDD" + updatedBoardValue.toString());
             }else{
                 if(playerTwo != null){
@@ -97,7 +97,7 @@ public class Board implements Serializable {
             System.out.println("Here is the state of the board after the turn: ");
             System.out.println(this.toString());
             System.out.println("The cloned board");
-            System.out.println(previous.toString());
+            //System.out.println(previous.toString());
             gameOver = checkIfGameOver();
             if(!gameOver){
                 updateTurn();

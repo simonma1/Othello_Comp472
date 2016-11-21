@@ -134,6 +134,9 @@ public class MiniMaxPlayer extends Player {
         while(current.getDepth() != MINIMAXDEPTH) {
             nextMoves = NextMoveGenerator.generateNextStates(current.getBoardValue());
             //Creates child of the current node and adds them to the stack
+            if(nextMoves.size() ==0){
+                nextMoves.add(current.getBoardValue());
+            }
             for (Board move : nextMoves) {
                 Node child = new Node(move, current.getDepth() + 1, current, current.getAlpha(), current.getBeta());
                 child.setDefaultMiniMaxValue();
