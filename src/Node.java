@@ -107,4 +107,16 @@ public class Node implements Serializable{
             return false;
         }
     }
+
+    public Turn findTurn(Turn turn){
+        if (isMaxNode()){
+            return turn;
+        }else{
+            if(turn == Turn.BLACK){
+                return Turn.WHITE;
+            }else{
+                return  Turn.BLACK;
+            }
+        }
+    }
 }

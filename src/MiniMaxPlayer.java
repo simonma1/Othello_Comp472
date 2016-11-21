@@ -24,12 +24,14 @@ public class MiniMaxPlayer extends Player {
     private Node root;
     private final int MINIMAXDEPTH = 3;
     LinkedList<Node> stack = new LinkedList<Node>();//Our stack
+    private Turn turn;
 
 
 
     @Override
     public Board executifyMove(Board currentBoard) {
         root = new Node(currentBoard);
+        turn = root.getBoardValue().getTurn();
         generateNodes(root);
         Node current = null;
         Board nextBoard = null;
@@ -135,6 +137,8 @@ public class MiniMaxPlayer extends Player {
             for (Board move : nextMoves) {
                 Node child = new Node(move, current.getDepth() + 1, current, current.getAlpha(), current.getBeta());
                 child.setDefaultMiniMaxValue();
+                Turn tempTurn = child.findTurn(turn);
+                child.getBoardValue().setTurn(tempTurn);
                 System.out.println("generateNodes " + child.getBoardValue().toString());
                 System.out.println("generate nodes depth " + current.getDepth());
                 current.addChild(child);
