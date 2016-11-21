@@ -82,6 +82,7 @@ public class Board implements Serializable {
         while(!gameOver){
             if (playerOne.getColor() == turn){
                updatedBoardValue = playerOne.executifyMove(this).getBoard();//Maybe pass the hashmap instead
+                System.out.println("DSDDDDD" + updatedBoardValue.toString());
             }else{
                 if(playerTwo != null){
                    // updatedBoardValue playerTwo.findNextMove(this);
