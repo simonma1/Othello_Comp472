@@ -32,6 +32,7 @@ public class MiniMaxPlayer extends Player {
     public Board executifyMove(Board currentBoard) {
         root = new Node(currentBoard);
         turn = root.getBoardValue().getTurn();
+        stack = new LinkedList<>();
         generateNodes(root);
         Node current = null;
         Board nextBoard = null;
@@ -77,6 +78,7 @@ public class MiniMaxPlayer extends Player {
                     System.out.println("2nd check" + current.getMiniMaxValue());
                     System.out.println("2st check parent " + parent.getMiniMaxValue());
                     System.out.println("2nd check depth" + current.getDepth());
+                    current = null;
 
                 } else if (Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE && Math.abs(current.getMiniMaxValue()) != Constant.MAXBETAVALUE) {//Not a leaf node and the parent does't have a value set
                     int currentValue = current.getMiniMaxValue();
@@ -91,6 +93,7 @@ public class MiniMaxPlayer extends Player {
                     System.out.println("3rd check " + current.getMiniMaxValue());
                     System.out.println("3rd check paretn " + parent.getMiniMaxValue());
                     System.out.println("3rd check depth " + current.getDepth());
+                    current = null;
 
 
 
@@ -102,6 +105,7 @@ public class MiniMaxPlayer extends Player {
 
                     System.out.println("4th check " + current.getMiniMaxValue());
                     System.out.println("4th check parent " + parent.getMiniMaxValue());
+
 
                 } else if (Math.abs(current.getMiniMaxValue()) != Constant.MAXBETAVALUE && Math.abs(parent.getMiniMaxValue()) != Constant.MAXBETAVALUE) {//cases where we need to compare the parent's value with the child's to see the one that would be selected
                     System.out.println("Last check  " + current.getMiniMaxValue());
@@ -118,6 +122,7 @@ public class MiniMaxPlayer extends Player {
                             parent.setBeta(currentValue);
                         }
                     }
+                    current = null;
                 }
             }
         }
@@ -150,7 +155,7 @@ public class MiniMaxPlayer extends Player {
                 stack.push(child);//Inserts the element as the first of the list
             }
 
-            System.out.println("generating " + current.getChildren().size());
+            System.out.println("top of stack " + current.getBoardValue().toString());
             current = stack.peekFirst();//Last element added
 
         }
@@ -169,5 +174,9 @@ public class MiniMaxPlayer extends Player {
         return nextBoard;
     }
 
+    public void resetMinimax(){
+        root = null;
+        stack = null;
+    }
 
 }
