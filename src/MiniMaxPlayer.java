@@ -174,7 +174,7 @@ public class MiniMaxPlayer extends Player {
         return nextBoard;
     }
 
-    public void resetMinimax(){
+    public void resetPlayer(){
         root = null;
         stack = null;
     }

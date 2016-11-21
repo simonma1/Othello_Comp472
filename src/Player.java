@@ -29,4 +29,6 @@ public abstract class Player implements Serializable{
     public void setHeuristicCalculator(HeuristicCalculator heuristicCalculator) {
         this.heuristicCalculator = heuristicCalculator;
     }
+
+    public void resetPlayer(){}
 }

@@ -81,8 +81,8 @@ public class Board implements Serializable {
         Board previous = null;
         while(!gameOver){
             if (playerOne.getColor() == turn){
-                ((MiniMaxPlayer)playerOne).resetMinimax();
-               updatedBoardValue = playerOne.executifyMove(this.clone()).getBoard();//Maybe pass the hashmap instead
+                playerOne.resetPlayer();
+                updatedBoardValue = playerOne.executifyMove(this.clone()).getBoard();//Maybe pass the hashmap instead
             }else{
                 if(playerTwo != null){
                    // updatedBoardValue playerTwo.findNextMove(this);
