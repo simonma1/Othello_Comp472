@@ -64,8 +64,8 @@ public class Board implements Serializable {
         //Initializes the list of white and black positions
         addWhitePiece(new Point(3,3));
         addBlackPiece(new Point(3,4));
-        addWhitePiece(new Point(4,3));
-        addBlackPiece(new Point(4,4));
+        addBlackPiece(new Point(4,3));
+        addWhitePiece(new Point(4,4));
 
         //Puts the 4 initial pieces on the board
         board.put(new Point(3,3),SquareState.WHITE);
