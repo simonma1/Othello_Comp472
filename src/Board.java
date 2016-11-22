@@ -285,7 +285,7 @@ public class Board implements Serializable {
 
     private boolean checkIfValidMove(Point point) {//Maybe the check should be done somewhere else
 
-        return NextMoveGenerator.isValidMoveStartingFromEmpty(this, point, turn);
+        return ColourChangingService.checkMoveIsValidAllDirections(this, point);
     }
 
     private void updateTurn() {
