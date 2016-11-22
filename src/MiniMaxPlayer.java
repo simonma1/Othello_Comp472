@@ -34,7 +34,7 @@ public class MiniMaxPlayer extends Player {
         turn = root.getBoardValue().getTurn();
         stack = new LinkedList<>();
         generateNodes(root);
-        Node current = null;
+        Node current;
         Board nextBoard = null;
         Random rand = new Random();
 
@@ -44,14 +44,12 @@ public class MiniMaxPlayer extends Player {
 
             if (parent == null) {
                 nextBoard = findBestChildHeuristicValue(root);
-                System.out.println("HEREERERERE");
             } else {
                 if (current.getDepth() == MINIMAXDEPTH && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE) {//The current node is a leaf and its parent's value hasn't been defined
                     //int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
                     int heuristicValue = rand.nextInt(150);
                     current.setMiniMaxValue(heuristicValue);
                     parent.setMiniMaxValue(heuristicValue);
-                    System.out.println("1st check" + current.getMiniMaxValue());
 
                     if (parent.isMaxNode()) {
                         parent.setAlpha(heuristicValue);
@@ -76,14 +74,10 @@ public class MiniMaxPlayer extends Player {
                             parent.setBeta(heuristicValue);
                         }
                     }
-                    System.out.println("2nd check" + current.getMiniMaxValue());
-                    System.out.println("2nd check parent " + parent.getMiniMaxValue());
-                    System.out.println("2nd check depth" + current.getDepth());
                     doPruning(current);
 
                 } else if (Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE && Math.abs(current.getMiniMaxValue()) != Constant.MAXBETAVALUE) {//Not a leaf node and the parent does't have a value set
                     int currentValue = current.getMiniMaxValue();
-                    System.out.println("3rd check paretn before" + parent.getMiniMaxValue());
                     parent.setMiniMaxValue(currentValue);
 
                     if (parent.isMaxNode()) {
@@ -91,26 +85,13 @@ public class MiniMaxPlayer extends Player {
                     } else {
                         parent.setBeta(currentValue);
                     }
-                    System.out.println("3rd check " + current.getMiniMaxValue());
-                    System.out.println("3rd check paretn " + parent.getMiniMaxValue());
-                    System.out.println("3rd check depth " + current.getDepth());
-                    current = null;
-
-
 
                 } else if (Math.abs(current.getMiniMaxValue()) == Constant.MAXBETAVALUE) {//Case when no heuristic value has been given for this part of the tree which is not a node
-                    System.out.println("HOLAAAAAAAAAAAAAA ");
                     current.setAlpha(parent.getAlpha());
                     current.setBeta(parent.getBeta());
                     generateNodes(current);
 
-                    System.out.println("4th check " + current.getMiniMaxValue());
-                    System.out.println("4th check parent " + parent.getMiniMaxValue());
-
-
                 } else if (Math.abs(current.getMiniMaxValue()) != Constant.MAXBETAVALUE && Math.abs(parent.getMiniMaxValue()) != Constant.MAXBETAVALUE) {//cases where we need to compare the parent's value with the child's to see the one that would be selected
-                    System.out.println("Last check  " + current.getMiniMaxValue());
-                    System.out.println("Last check  depth " + current.getDepth());
                     int currentValue = current.getMiniMaxValue();
                     if (parent.isMaxNode()) {
                         if (currentValue > parent.getMiniMaxValue()) {
@@ -127,7 +108,6 @@ public class MiniMaxPlayer extends Player {
                 }
             }
         }
-        System.out.println("Executify end" + current.getAlpha());
         return nextBoard;
     }
 
@@ -148,19 +128,13 @@ public class MiniMaxPlayer extends Player {
                 child.setDefaultMiniMaxValue();
                 Turn tempTurn = child.findTurn(turn);
                 child.getBoardValue().setTurn(tempTurn);
-                System.out.println("generateNodes " + child.getBoardValue().toString());
-                System.out.println("generate nodes depth " + current.getDepth());
                 current.addChild(child);
                 current.setDefaultMiniMaxValue();
-                System.out.println("generate nodes Value" + current.getMiniMaxValue());
                 stack.push(child);//Inserts the element as the first of the list
             }
 
-            System.out.println("top of stack " + current.getBoardValue().toString());
             current = stack.peekFirst();//Last element added
-
         }
-
     }
 
 

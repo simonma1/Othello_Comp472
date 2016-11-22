@@ -15,7 +15,7 @@ public class Board implements Serializable {
     private Player playerTwo;
     private Turn turn = Turn.BLACK;
     private boolean gameOver = false;
-    private int turnNumber = 0;
+    private int turnNumber = 1;
     private boolean noMovesAvailable = false;
     private int numBlackPieces = 2;
     private int numWhitePieces = 2;
@@ -32,7 +32,6 @@ public class Board implements Serializable {
     /*
     * List of things to do
     * Function to check if both players have passed their turns implying game over
-    * NextMoveGenerator or Player returns updated board
     * */
 
 
@@ -94,7 +93,6 @@ public class Board implements Serializable {
                 if(playerTwo != null){
                    // updatedBoardValue playerTwo.findNextMove(this);
                 }else{//PlayerTwo is human
-                     previous = (Board) this.clone();
                     updatedBoardValue = getNextMoveFromInput();
                 }
             }
@@ -114,7 +112,7 @@ public class Board implements Serializable {
     }
 
     private boolean checkIfGameOver() {
-        if(turnNumber == BOARD_HEIGHT*BOARD_WIDTH){
+        if((numBlackPieces + numWhitePieces) == (BOARD_WIDTH * BOARD_HEIGHT)){
             return true;
         }else if(noMovesAvailable){
             return true;
@@ -274,12 +272,15 @@ public class Board implements Serializable {
                 SquareState updatedValue = updatedBoard.get(currentPoint);
                 if(updatedValue == SquareState.BLACK){
                     numBlackPieces++;
+                    addBlackPiece(currentPoint);
                 }if(updatedValue == SquareState.WHITE){
                     numWhitePieces++;
+                    addWhitePiece(currentPoint);
                 }
                 board.put(currentPoint, updatedValue);
             }
         }
+        turnNumber++;
     }
 
     private boolean checkIfValidMove(Point point) {//Maybe the check should be done somewhere else
