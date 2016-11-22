@@ -58,6 +58,7 @@ public class MiniMaxPlayer extends Player {
                     } else {
                         parent.setBeta(heuristicValue);
                     }
+                    doPruning(current);
 
                 } else if (current.getDepth() == MINIMAXDEPTH) {//Node is a leaf node but the value of the parent has already been updated
                     //int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
@@ -76,9 +77,9 @@ public class MiniMaxPlayer extends Player {
                         }
                     }
                     System.out.println("2nd check" + current.getMiniMaxValue());
-                    System.out.println("2st check parent " + parent.getMiniMaxValue());
+                    System.out.println("2nd check parent " + parent.getMiniMaxValue());
                     System.out.println("2nd check depth" + current.getDepth());
-                    current = null;
+                    doPruning(current);
 
                 } else if (Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE && Math.abs(current.getMiniMaxValue()) != Constant.MAXBETAVALUE) {//Not a leaf node and the parent does't have a value set
                     int currentValue = current.getMiniMaxValue();
@@ -122,7 +123,7 @@ public class MiniMaxPlayer extends Player {
                             parent.setBeta(currentValue);
                         }
                     }
-                    current = null;
+                    doPruning(current);
                 }
             }
         }
@@ -172,6 +173,26 @@ public class MiniMaxPlayer extends Player {
             }
         }
         return nextBoard;
+    }
+
+    private void doPruning(Node current){
+        Node parent = current.getParent();
+
+        if (parent.isMaxNode()){
+            if (current.getMiniMaxValue() > parent.getBeta()){
+                while(stack.peek().getParent() == parent){
+                    stack.pop();
+                    System.out.println("Watch me prune 11111");
+                }
+            }
+        }else{
+            if(current.getMiniMaxValue() < parent.getAlpha()){
+                while(stack.peek().getParent() == parent){
+                    stack.pop();
+                    System.out.println("Watch me prune 22222");
+                }
+            }
+        }
     }
 
     public void resetPlayer(){
