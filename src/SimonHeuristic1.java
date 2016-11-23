@@ -66,6 +66,9 @@ public class SimonHeuristic1 implements HeuristicCalculator {
 
             }
         }
+        System.out.println("The heuristic for the following board has been calculated: ");
+        System.out.println(board.toString());
+        System.out.println("The following value corresponds to the heuristic value: " + currentHeuristicValue);
         return currentHeuristicValue;
     }
 
