@@ -44,8 +44,14 @@ public class MiniMaxPlayer extends Player {
 
             if (parent == null) {
                 nextBoard = findBestChildHeuristicValue(root);
-            } else {
-                if (current.getDepth() == MINIMAXDEPTH && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE) {//The current node is a leaf and its parent's value hasn't been defined
+            } else {//Checks to see if the game might be over
+                if(Math.abs(current.getMiniMaxValue()) == Constant.MAXBETAVALUE && isGameOverCheck(current.getBoardValue())){
+                    int hValue = heuristicValueIfGameOver(current.getBoardValue(), turn);
+                    current.setMiniMaxValue(hValue);
+                    System.out.println("AM I HERE");
+                    stack.push(current);//Repush the node on the stack so that will execute one of the other check
+
+                }else if (current.getDepth() == MINIMAXDEPTH && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE) {//The current node is a leaf and its parent's value hasn't been defined
                     int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue(), turn);
                     current.setMiniMaxValue(heuristicValue);
                     parent.setMiniMaxValue(heuristicValue);
@@ -170,6 +176,23 @@ public class MiniMaxPlayer extends Player {
     public void resetPlayer(){
         root = null;
         stack = null;
+    }
+
+    private boolean isGameOverCheck(Board board){
+
+        return board.checkIfGameOver();
+    }
+
+    private int heuristicValueIfGameOver(Board board, Turn turn){
+        //Method only reached if there is a winner
+        Board boardCopy = board.clone();
+
+        boardCopy.printWinner();//Sets the winner
+        if (boardCopy.getGameWinner() == turn){
+            return 1000000;
+        }else {
+            return -1000000;
+        }
     }
 
 }

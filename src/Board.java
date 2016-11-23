@@ -14,6 +14,7 @@ public class Board implements Serializable {
     private Player playerOne;
     private Player playerTwo;
     private Turn turn = Turn.BLACK;
+    private Turn gameWinner;
     private boolean gameOver = false;
     private int turnNumber = 1;
     private boolean noMovesAvailable = false;
@@ -113,7 +114,7 @@ public class Board implements Serializable {
         }
     }
 
-    private boolean checkIfGameOver() {
+    public boolean checkIfGameOver() {
         if((numBlackPieces + numWhitePieces) == (BOARD_WIDTH * BOARD_HEIGHT)){
             return true;
         }else if(noMovesAvailable){
@@ -405,6 +406,7 @@ public class Board implements Serializable {
         String winner = "";
         if (numWhitePieces>numBlackPieces){
             winner += "WHITE WINS!!!!! \n";
+            this.gameWinner = Turn.WHITE;
         }else if(numBlackPieces>numWhitePieces){
             winner += "BLACK wINS!!!!! \n";
         }else{
@@ -413,5 +415,13 @@ public class Board implements Serializable {
 
         winner += "Final Score    White: "+ numWhitePieces + "  Black: " + numBlackPieces;
         return winner;
+    }
+
+    public Turn getGameWinner() {
+        return gameWinner;
+    }
+
+    public void setGameWinner(Turn gameWinner) {
+        this.gameWinner = gameWinner;
     }
 }
