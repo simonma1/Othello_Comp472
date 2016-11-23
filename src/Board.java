@@ -269,6 +269,9 @@ public class Board implements Serializable {
     private void updateBoard(HashMap<Point, SquareState> updatedBoard) {
         numBlackPieces = 0;
         numWhitePieces = 0;
+        blackPieces.clear();
+        whitePieces.clear();
+
         for(int i=0; i<BOARD_HEIGHT;i++){
             for (int j=0; j<BOARD_WIDTH; j++){
                 Point currentPoint = new Point(i,j);
