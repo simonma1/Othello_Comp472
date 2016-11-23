@@ -182,7 +182,7 @@ public class MiniMaxPlayer extends Player {
 
         board.setNumBlackPieces(board.getBlackPieces().size());
         board.setNumWhitePieces(board.getWhitePieces().size());
-        System.out.println(board.getNumBlackPieces() + board.getNumWhitePieces() + "DDDD");
+        System.out.println(board.getBlackPieces().size() + "DDDD");
         return board.checkIfGameOver();
     }
 

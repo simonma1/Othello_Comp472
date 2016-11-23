@@ -416,7 +416,7 @@ public class Board implements Serializable {
             winner += "WHITE WINS!!!!! \n";
             this.gameWinner = Turn.WHITE;
         }else if(numBlackPieces>numWhitePieces){
-            winner += "BLACK wINS!!!!! \n";
+            winner += "BLACK WINS!!!!! \n";
         }else{
             winner += "Wait?! A tie??? \n";
         }
@@ -431,5 +431,21 @@ public class Board implements Serializable {
 
     public void setGameWinner(Turn gameWinner) {
         this.gameWinner = gameWinner;
+    }
+
+    public boolean isEqual(Board board){
+        boolean equals = true;
+        HashMap<Point,SquareState> firstBoard = this.board;
+        HashMap<Point,SquareState> secondBoard = board.board;
+
+        for(int i=0; i<BOARD_HEIGHT;i++){
+            for (int j=0; j<BOARD_WIDTH; j++){
+                Point p = new Point(i,j);
+                if(firstBoard.get(p) != secondBoard.get(p)){
+                    equals = false;
+                }
+            }
+        }
+        return equals;
     }
 }
