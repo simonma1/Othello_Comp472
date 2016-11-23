@@ -179,18 +179,18 @@ public class Board implements Serializable {
                 }
                 if(keyboard.hasNext(Pattern.compile("\\)"))){
                     keyboard.nextLine();//return the input field to ignore the last parenthesis
+                    isValidMove = true;
                 }
 
                 //isValidMove = checkIfValidMove(input);
-                isValidMove = true;
+
 
                 if (isValidMove) {
                     updatedValue = convertStringToMap(input);
                 }
 
             }else{
-                    input = keyboard.nextLine();
-                    System.out.println(input + " is an invalid input. Please try again");
+                System.out.println("The pattern does not follow any accepted one");
                 }
             if(!isValidMove){
                 input = keyboard.nextLine();
