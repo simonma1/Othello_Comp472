@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class NextMoveGenerator {
 
     private static int encounteredOppositeColors = 0;
+    private static boolean encounteredSameColourOtherThanFirst = false;
 
     public static ArrayList<Board> generateNextStates(Board board) {
         ArrayList<Board> generatedChildrenStates = new ArrayList<>();
@@ -58,12 +59,13 @@ public class NextMoveGenerator {
             return;
 
         encounteredOppositeColors = 0;
+        encounteredSameColourOtherThanFirst = false;
         boolean isValidMoveStartingFromColour = false;
 
         int i = (int)colourPiece.getX();
         int j = (int)colourPiece.getY();
 
-        while(!isValidMoveStartingFromColour && i < Board.BOARD_HEIGHT && j < Board.BOARD_WIDTH) {
+        while(!isValidMoveStartingFromColour && !encounteredSameColourOtherThanFirst && i < Board.BOARD_HEIGHT && j < Board.BOARD_WIDTH) {
             Point currentPos = new Point(i, j);
             isValidMoveStartingFromColour = generalValidityCheck(board, currentPos);
             if (isValidMoveStartingFromColour) {
@@ -81,12 +83,13 @@ public class NextMoveGenerator {
             return;
 
         encounteredOppositeColors = 0;
+        encounteredSameColourOtherThanFirst = false;
         boolean isValidMoveStartingFromColour = false;
 
         int i = (int)colourPiece.getX();
         int j = (int)colourPiece.getY();
 
-        while(!isValidMoveStartingFromColour && i < Board.BOARD_HEIGHT && j >= 0) {
+        while(!isValidMoveStartingFromColour && !encounteredSameColourOtherThanFirst && i < Board.BOARD_HEIGHT && j >= 0) {
             Point currentPos = new Point(i, j);
             isValidMoveStartingFromColour = generalValidityCheck(board, currentPos);
             if (isValidMoveStartingFromColour) {
@@ -104,12 +107,13 @@ public class NextMoveGenerator {
             return;
 
         encounteredOppositeColors = 0;
+        encounteredSameColourOtherThanFirst = false;
         boolean isValidMoveStartingFromColour = false;
 
         int i = (int)colourPiece.getX();
         int j = (int)colourPiece.getY();
 
-        while(!isValidMoveStartingFromColour && i >= 0 && j < Board.BOARD_WIDTH) {
+        while(!isValidMoveStartingFromColour && !encounteredSameColourOtherThanFirst && i >= 0 && j < Board.BOARD_WIDTH) {
             Point currentPos = new Point(i, j);
             isValidMoveStartingFromColour = generalValidityCheck(board, currentPos);
             if (isValidMoveStartingFromColour) {
@@ -127,12 +131,13 @@ public class NextMoveGenerator {
             return;
 
         encounteredOppositeColors = 0;
+        encounteredSameColourOtherThanFirst = false;
         boolean isValidMoveStartingFromColour = false;
 
         int i = (int)colourPiece.getX();
         int j = (int)colourPiece.getY();
 
-        while(!isValidMoveStartingFromColour && i >= 0 && j >= 0) {
+        while(!isValidMoveStartingFromColour && !encounteredSameColourOtherThanFirst && i >= 0 && j >= 0) {
             Point currentPos = new Point(i, j);
             isValidMoveStartingFromColour = generalValidityCheck(board, currentPos);
             if (isValidMoveStartingFromColour) {
@@ -150,12 +155,13 @@ public class NextMoveGenerator {
             return;
 
         encounteredOppositeColors = 0;
+        encounteredSameColourOtherThanFirst = false;
         boolean isValidMoveStartingFromColour = false;
 
         int i = (int)colourPiece.getX();
         int j = (int)colourPiece.getY();
 
-        while(!isValidMoveStartingFromColour && i < Board.BOARD_HEIGHT) {
+        while(!isValidMoveStartingFromColour && !encounteredSameColourOtherThanFirst && i < Board.BOARD_HEIGHT) {
             Point currentPos = new Point(i, j);
             isValidMoveStartingFromColour = generalValidityCheck(board, currentPos);
             if (isValidMoveStartingFromColour) {
@@ -172,12 +178,13 @@ public class NextMoveGenerator {
             return;
 
         encounteredOppositeColors = 0;
+        encounteredSameColourOtherThanFirst = false;
         boolean isValidMoveStartingFromColour = false;
 
         int i = (int)colourPiece.getX();
         int j = (int)colourPiece.getY();
 
-        while(!isValidMoveStartingFromColour && i >= 0) {
+        while(!isValidMoveStartingFromColour && !encounteredSameColourOtherThanFirst && i >= 0) {
             Point currentPos = new Point(i, j);
             isValidMoveStartingFromColour = generalValidityCheck(board, currentPos);
             if (isValidMoveStartingFromColour) {
@@ -194,12 +201,13 @@ public class NextMoveGenerator {
             return;
 
         encounteredOppositeColors = 0;
+        encounteredSameColourOtherThanFirst = false;
         boolean isValidMoveStartingFromColour = false;
 
         int i = (int)colourPiece.getX();
         int j = (int)colourPiece.getY();
 
-        while(!isValidMoveStartingFromColour && j < Board.BOARD_WIDTH) {
+        while(!isValidMoveStartingFromColour && !encounteredSameColourOtherThanFirst && j < Board.BOARD_WIDTH) {
             Point currentPos = new Point(i, j);
             isValidMoveStartingFromColour = generalValidityCheck(board, currentPos);
             if (isValidMoveStartingFromColour) {
@@ -216,12 +224,13 @@ public class NextMoveGenerator {
             return;
 
         encounteredOppositeColors = 0;
+        encounteredSameColourOtherThanFirst = false;
         boolean isValidMoveStartingFromColour = false;
 
         int i = (int)colourPiece.getX();
         int j = (int)colourPiece.getY();
 
-        while(!isValidMoveStartingFromColour && j >= 0) {
+        while(!isValidMoveStartingFromColour && !encounteredSameColourOtherThanFirst && j >= 0) {
             Point currentPos = new Point(i, j);
             isValidMoveStartingFromColour = generalValidityCheck(board, currentPos);
             if (isValidMoveStartingFromColour) {
@@ -240,7 +249,8 @@ public class NextMoveGenerator {
                 encounteredOppositeColors++;
             }
             if ((board.getBoard().get(currentPos) == SquareState.EMPTY && encounteredOppositeColors == 0) ||
-                    board.getBoard().get(currentPos) == SquareState.BLACK) {
+                    (board.getBoard().get(currentPos) == SquareState.BLACK && encounteredOppositeColors > 0)) {
+                encounteredSameColourOtherThanFirst = true;
                 return isValidMoveStartingFromColour;
             }
             if (board.getBoard().get(currentPos) == SquareState.EMPTY && encounteredOppositeColors > 0) {
@@ -252,7 +262,8 @@ public class NextMoveGenerator {
                 encounteredOppositeColors++;
             }
             if ((board.getBoard().get(currentPos) == SquareState.EMPTY && encounteredOppositeColors == 0) ||
-                    board.getBoard().get(currentPos) == SquareState.WHITE) {
+                    (board.getBoard().get(currentPos) == SquareState.WHITE && encounteredOppositeColors > 0)) {
+                encounteredSameColourOtherThanFirst = true;
                 return isValidMoveStartingFromColour;
             }
             if (board.getBoard().get(currentPos) == SquareState.EMPTY && encounteredOppositeColors > 0) {

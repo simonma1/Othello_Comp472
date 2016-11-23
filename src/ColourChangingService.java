@@ -7,14 +7,15 @@ public class ColourChangingService {
 
     private static int encounteredOppositeColors = 0;
     private static boolean emptyEncountered = false;
+    private static boolean emptyOrSameColourEncountered = false;
     public static void changeColours(Board board, Point theNewMove) {
 
         if (checkIsValidUnder(board, theNewMove)) {
             int i = (int)theNewMove.getX();
             int j = (int)theNewMove.getY();
-            emptyEncountered = false;
+            emptyOrSameColourEncountered = false;
 
-            while (i < Board.BOARD_WIDTH && !emptyEncountered) {
+            while (i < Board.BOARD_WIDTH && !emptyOrSameColourEncountered) {
                 Point currentPos = new Point(i, j);
                 changeCurrentPositionColour(board, currentPos, theNewMove);
                 i++;
@@ -23,9 +24,9 @@ public class ColourChangingService {
         if (checkIsValidOver(board, theNewMove)) {
             int i = (int)theNewMove.getX();
             int j = (int)theNewMove.getY();
-            emptyEncountered = false;
+            emptyOrSameColourEncountered = false;
 
-            while (i >= 0 && !emptyEncountered) {
+            while (i >= 0 && !emptyOrSameColourEncountered) {
                 Point currentPos = new Point(i, j);
                 changeCurrentPositionColour(board, currentPos, theNewMove);
                 i--;
@@ -34,9 +35,9 @@ public class ColourChangingService {
         if (checkIsValidLeft(board, theNewMove)) {
             int i = (int)theNewMove.getX();
             int j = (int)theNewMove.getY();
-            emptyEncountered = false;
+            emptyOrSameColourEncountered = false;
 
-            while (j >= 0 && !emptyEncountered) {
+            while (j >= 0 && !emptyOrSameColourEncountered) {
                 Point currentPos = new Point(i, j);
                 changeCurrentPositionColour(board, currentPos, theNewMove);
                 j--;
@@ -45,9 +46,9 @@ public class ColourChangingService {
         if (checkIsValidRight(board, theNewMove)) {
             int i = (int)theNewMove.getX();
             int j = (int)theNewMove.getY();
-            emptyEncountered = false;
+            emptyOrSameColourEncountered = false;
 
-            while (j < Board.BOARD_WIDTH && !emptyEncountered) {
+            while (j < Board.BOARD_WIDTH && !emptyOrSameColourEncountered) {
                 Point currentPos = new Point(i, j);
                 changeCurrentPositionColour(board, currentPos, theNewMove);
                 j++;
@@ -56,9 +57,9 @@ public class ColourChangingService {
         if (checkIsValidTopRightDiagonal(board, theNewMove)) {
             int i = (int)theNewMove.getX();
             int j = (int)theNewMove.getY();
-            emptyEncountered = false;
+            emptyOrSameColourEncountered = false;
 
-            while (i >= 0 && j < Board.BOARD_WIDTH && !emptyEncountered) {
+            while (i >= 0 && j < Board.BOARD_WIDTH && !emptyOrSameColourEncountered) {
                 Point currentPos = new Point(i, j);
                 changeCurrentPositionColour(board, currentPos, theNewMove);
                 i--;
@@ -68,9 +69,9 @@ public class ColourChangingService {
         if (checkIsValidBottomRightDiagonal(board, theNewMove)) {
             int i = (int)theNewMove.getX();
             int j = (int)theNewMove.getY();
-            emptyEncountered = false;
+            emptyOrSameColourEncountered = false;
 
-            while (i < Board.BOARD_HEIGHT && j < Board.BOARD_WIDTH && !emptyEncountered) {
+            while (i < Board.BOARD_HEIGHT && j < Board.BOARD_WIDTH && !emptyOrSameColourEncountered) {
                 Point currentPos = new Point(i, j);
                 changeCurrentPositionColour(board, currentPos, theNewMove);
                 i++;
@@ -80,9 +81,9 @@ public class ColourChangingService {
         if (checkIsValidTopLeftDiagonal(board, theNewMove)) {
             int i = (int)theNewMove.getX();
             int j = (int)theNewMove.getY();
-            emptyEncountered = false;
+            emptyOrSameColourEncountered = false;
 
-            while (i >= 0 && j >= 0 && !emptyEncountered) {
+            while (i >= 0 && j >= 0 && !emptyOrSameColourEncountered) {
                 Point currentPos = new Point(i, j);
                 changeCurrentPositionColour(board, currentPos, theNewMove);
                 i--;
@@ -92,9 +93,9 @@ public class ColourChangingService {
         if (checkIsValidBottomLeftDiagonal(board, theNewMove)) {
             int i = (int)theNewMove.getX();
             int j = (int)theNewMove.getY();
-            emptyEncountered = false;
+            emptyOrSameColourEncountered = false;
 
-            while (i < Board.BOARD_HEIGHT && j >= 0 && !emptyEncountered) {
+            while (i < Board.BOARD_HEIGHT && j >= 0 && !emptyOrSameColourEncountered) {
                 Point currentPos = new Point(i, j);
                 changeCurrentPositionColour(board, currentPos, theNewMove);
                 i++;
@@ -307,10 +308,12 @@ public class ColourChangingService {
                 board.removeWhitePiece(currentPos);
                 board.addBlackPiece(currentPos);
             }
-            else if (board.getBoard().get(currentPos) == SquareState.BLACK)
+            else if (board.getBoard().get(currentPos) == SquareState.BLACK && !currentPos.equals(theNewMove)) {
+                emptyOrSameColourEncountered = true;
                 return true;
+            }
             else if (board.getBoard().get(currentPos) == SquareState.EMPTY) {
-                emptyEncountered = true;
+                emptyOrSameColourEncountered = true;
                 return false;
             }
         }
@@ -320,10 +323,12 @@ public class ColourChangingService {
                 board.removeBlackPiece(currentPos);
                 board.addWhitePiece(currentPos);
             }
-            else if (board.getBoard().get(currentPos) == SquareState.WHITE)
+            else if (board.getBoard().get(currentPos) == SquareState.WHITE && !currentPos.equals(theNewMove)) {
+                emptyOrSameColourEncountered = true;
                 return true;
+            }
             else if (board.getBoard().get(currentPos) == SquareState.EMPTY) {
-                emptyEncountered = true;
+                emptyOrSameColourEncountered = true;
                 return false;
             }
         }
