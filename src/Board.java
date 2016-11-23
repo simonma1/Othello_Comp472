@@ -181,8 +181,8 @@ public class Board implements Serializable {
                     keyboard.nextLine();//return the input field to ignore the last parenthesis
                 }
 
-                isValidMove = checkIfValidMove(input);
-
+                //isValidMove = checkIfValidMove(input);
+                isValidMove = true;
 
                 if (isValidMove) {
                     updatedValue = convertStringToMap(input);

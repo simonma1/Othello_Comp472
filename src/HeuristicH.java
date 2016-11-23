@@ -6,8 +6,13 @@ import java.util.HashMap;
  */
 public class HeuristicH implements HeuristicCalculator {
 
-    @Override
+
     public int calculateHeuristic(HashMap<Point, SquareState> stateMap) {
+        return 0;
+    }
+
+    @Override
+    public int calculateHeuristic(Board board, Turn turn) {
         return 0;
     }
 }

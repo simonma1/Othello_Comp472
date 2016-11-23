@@ -46,8 +46,7 @@ public class MiniMaxPlayer extends Player {
                 nextBoard = findBestChildHeuristicValue(root);
             } else {
                 if (current.getDepth() == MINIMAXDEPTH && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE) {//The current node is a leaf and its parent's value hasn't been defined
-                    //int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
-                    int heuristicValue = rand.nextInt(150);
+                    int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue(), turn);
                     current.setMiniMaxValue(heuristicValue);
                     parent.setMiniMaxValue(heuristicValue);
 
@@ -59,8 +58,7 @@ public class MiniMaxPlayer extends Player {
                     doPruning(current);
 
                 } else if (current.getDepth() == MINIMAXDEPTH) {//Node is a leaf node but the value of the parent has already been updated
-                    //int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue().getBoard());
-                    int heuristicValue = rand.nextInt(150);
+                    int heuristicValue = heuristicCalculator.calculateHeuristic(current.getBoardValue(), turn);
                     current.setMiniMaxValue(heuristicValue);
 
                     if (parent.isMaxNode()) {
