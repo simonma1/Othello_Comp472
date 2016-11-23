@@ -6,6 +6,12 @@ import java.util.HashMap;
  */
 public class SimonHeuristic1 implements HeuristicCalculator {
 
+    /*
+    * This heuristic will give a wait to each board position
+    * Corners will be the most favorable followed by all position by the side of the board
+    * The closer to the middle the smaller the value will be
+    * */
+
     private SquareState playerColor;
     private SquareState opponentColor;
     private int currentHeuristicValue;
