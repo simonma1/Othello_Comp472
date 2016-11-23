@@ -394,6 +394,14 @@ public class Board implements Serializable {
         blackPieces.add(move);
     }
 
+    public void removeWhitePiece(Point move) {
+        whitePieces.remove(move);
+    }
+
+    public void removeBlackPiece(Point move) {
+        blackPieces.remove(move);
+    }
+
     public ArrayList<Point> getBlackPieces() {
         return blackPieces;
     }
