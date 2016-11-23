@@ -43,7 +43,7 @@ public class Board implements Serializable {
 
     public Board(Player p1){
         playerOne = p1;
-        playerOne.setColor(Turn.WHITE);
+        playerOne.setColor(Turn.BLACK);
     }
 
     public Board(Player p1, Player p2){

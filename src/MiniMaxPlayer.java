@@ -180,6 +180,9 @@ public class MiniMaxPlayer extends Player {
 
     private boolean isGameOverCheck(Board board){
 
+        board.setNumBlackPieces(board.getBlackPieces().size());
+        board.setNumWhitePieces(board.getWhitePieces().size());
+        System.out.println(board.getNumBlackPieces() + board.getNumWhitePieces() + "DDDD");
         return board.checkIfGameOver();
     }
 
