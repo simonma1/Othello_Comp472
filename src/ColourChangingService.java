@@ -268,6 +268,7 @@ public class ColourChangingService {
         if (board.getBoard().get(theNewMove) == SquareState.BLACK) {
             if (board.getBoard().get(currentPos) == SquareState.WHITE) {
                 board.getBoard().put(currentPos, SquareState.BLACK);
+                board.removeWhitePiece(currentPos);
                 board.addBlackPiece(currentPos);
             }
             else if (board.getBoard().get(currentPos) == SquareState.BLACK)
@@ -276,6 +277,7 @@ public class ColourChangingService {
         else if (board.getBoard().get(theNewMove) == SquareState.WHITE) {
             if (board.getBoard().get(currentPos) == SquareState.BLACK) {
                 board.getBoard().put(currentPos, SquareState.WHITE);
+                board.removeBlackPiece(currentPos);
                 board.addWhitePiece(currentPos);
             }
             else if (board.getBoard().get(currentPos) == SquareState.WHITE)
