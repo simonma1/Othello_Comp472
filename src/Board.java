@@ -107,6 +107,8 @@ public class Board implements Serializable {
             if(!gameOver){
                 updateTurn();
                 turnNumber++;
+            }else{
+                System.out.println(printWinner());
             }
         }
     }
@@ -397,5 +399,19 @@ public class Board implements Serializable {
 
     public ArrayList<Point> getWhitePieces() {
         return whitePieces;
+    }
+
+    public String printWinner(){
+        String winner = "";
+        if (numWhitePieces>numBlackPieces){
+            winner += "WHITE WINS!!!!! \n";
+        }else if(numBlackPieces>numWhitePieces){
+            winner += "BLACK wINS!!!!! \n";
+        }else{
+            winner += "Wait?! A tie??? \n";
+        }
+
+        winner += "Final Score    White: "+ numWhitePieces + "  Black: " + numBlackPieces;
+        return winner;
     }
 }
