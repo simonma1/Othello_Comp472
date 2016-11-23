@@ -11,8 +11,8 @@ public class SimonHeuristic1 implements HeuristicCalculator {
     private int currentHeuristicValue;
     private final int cornerValue = 1000;
     private final int sideValue = 100;
-    private int lowerBound = 1;
-    private int higherBound = Board.BOARD_HEIGHT - 2;
+    private final int otherValue = 100;
+
 
     @Override
     public int calculateHeuristic(Board board, Turn turn) {
@@ -24,6 +24,8 @@ public class SimonHeuristic1 implements HeuristicCalculator {
         for(int i=0; i<Board.BOARD_HEIGHT; i++){
             for(int j=0; j<Board.BOARD_WIDTH; j++){
                 Point p = new Point(i,j);
+                int xCord = (int)p.getX();
+                int yCord = (int)p.getY();
 
                 if(isCornerPoint(p)){//Corners are worth the most
                     if(currentBoardState.get(p) == playerColor){
@@ -40,7 +42,25 @@ public class SimonHeuristic1 implements HeuristicCalculator {
                     }
 
                 }else{
-
+                    if(xCord == 1 || xCord == 6 || yCord == 1 || yCord == 6){
+                        if(currentBoardState.get(p) == playerColor){
+                            currentHeuristicValue += otherValue/3;
+                        }else if(currentBoardState.get(p) == opponentColor){
+                            currentHeuristicValue -=otherValue/3;
+                        }
+                    }else if(xCord == 2 || xCord == 5 || yCord == 2 || yCord ==5){
+                        if(currentBoardState.get(p) == playerColor){
+                            currentHeuristicValue += otherValue/10;
+                        }else if(currentBoardState.get(p) == opponentColor){
+                            currentHeuristicValue -=otherValue/10;
+                        }
+                    }else if(xCord == 3 || xCord == 4 || yCord == 3 || yCord ==4){
+                        if(currentBoardState.get(p) == playerColor){
+                            currentHeuristicValue += otherValue/50;
+                        }else if(currentBoardState.get(p) == opponentColor){
+                            currentHeuristicValue -=otherValue/50;
+                        }
+                    }
                 }
 
 
