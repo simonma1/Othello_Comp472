@@ -90,7 +90,9 @@ public class Board implements Serializable {
         Board previous = null;
         while(!gameOver){
             playerOne.resetPlayer();
-            playerTwo.resetPlayer();
+            if(playerTwo != null){
+                playerTwo.resetPlayer();
+            }
             if (playerOne.getColor() == turn){
                 updatedBoardValue = playerOne.executifyMove(this.clone()).getBoard();
             }else{

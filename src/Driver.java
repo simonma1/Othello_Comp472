@@ -12,7 +12,7 @@ public class Driver {
         HeuristicCalculator secondHeuristic = new SimonHeuristic2();
         p2.setHeuristicCalculator(secondHeuristic);
 
-        Board board = new Board(p2, p1);
+        Board board = new Board(p1,p2);
 
         board.startNewGame();
     }
