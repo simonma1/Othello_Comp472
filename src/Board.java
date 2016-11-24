@@ -48,7 +48,9 @@ public class Board implements Serializable {
 
     public Board(Player p1, Player p2){
         playerOne = p1;
+        playerOne.setColor(Turn.BLACK);
         playerTwo = p2;
+        playerTwo.setColor(Turn.WHITE);
     }
 
     public void startNewGame(){
@@ -87,12 +89,13 @@ public class Board implements Serializable {
         HashMap<Point, SquareState> updatedBoardValue = null;
         Board previous = null;
         while(!gameOver){
+            playerOne.resetPlayer();
+            playerTwo.resetPlayer();
             if (playerOne.getColor() == turn){
-                playerOne.resetPlayer();
-                updatedBoardValue = playerOne.executifyMove(this.clone()).getBoard();//Maybe pass the hashmap instead
+                updatedBoardValue = playerOne.executifyMove(this.clone()).getBoard();
             }else{
                 if(playerTwo != null){
-                   // updatedBoardValue playerTwo.findNextMove(this);
+                    updatedBoardValue = playerTwo.executifyMove(this.clone()).getBoard();
                 }else{//PlayerTwo is human
                     updatedBoardValue = getNextMoveFromInput();
                 }
@@ -102,8 +105,6 @@ public class Board implements Serializable {
             updateBoard(updatedBoardValue);
             System.out.println("Here is the state of the board after the turn: ");
             System.out.println(this.toString());
-            System.out.println("The cloned board");
-            //System.out.println(previous.toString());
             gameOver = checkIfGameOver();
             if(!gameOver){
                 updateTurn();

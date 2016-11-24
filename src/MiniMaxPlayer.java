@@ -160,14 +160,12 @@ public class MiniMaxPlayer extends Player {
             if (current.getMiniMaxValue() > parent.getBeta()){
                 while(stack.peek().getParent() == parent){
                     stack.pop();
-                    System.out.println("Watch me prune 11111");
                 }
             }
         }else{
             if(current.getMiniMaxValue() < parent.getAlpha()){
                 while(stack.peek().getParent() == parent){
                     stack.pop();
-                    System.out.println("Watch me prune 22222");
                 }
             }
         }
@@ -182,7 +180,6 @@ public class MiniMaxPlayer extends Player {
 
         board.setNumBlackPieces(board.getBlackPieces().size());
         board.setNumWhitePieces(board.getWhitePieces().size());
-        System.out.println(board.getBlackPieces().size() + "DDDD");
         return board.checkIfGameOver();
     }
 
