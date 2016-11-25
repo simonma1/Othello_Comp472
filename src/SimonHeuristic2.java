@@ -17,20 +17,20 @@ public class SimonHeuristic2 implements HeuristicCalculator{
     private int currentHeuristicValue;
 
     @Override
-    public int calculateHeuristic(Board board, Turn turn) {
+    public int calculateHeuristic(Board board) {
         HashMap<Point,SquareState> currentBoardState = board.getBoard();
-        setColors(turn);
+        setColors(board.getTurn());
         currentHeuristicValue = 0;
 
         //Gets the number of possible moves for the player from this board
         Board boardCopy = board.clone();
-        boardCopy.setTurn(turn);
+        boardCopy.setTurn(board.getTurn());
         ArrayList<Board> nextPossibleMoves = NextMoveGenerator.generateNextStates(boardCopy);
         currentHeuristicValue += nextPossibleMoves.size();
 
         //Gets the number of possible moves for the opponent
         Turn tempTurn;
-        if (turn == Turn.BLACK){
+        if (board.getTurn() == Turn.BLACK){
             tempTurn = Turn.WHITE;
         }else{
             tempTurn = Turn.BLACK;
