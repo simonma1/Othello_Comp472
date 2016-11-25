@@ -21,9 +21,9 @@ public class SimonHeuristic1 implements HeuristicCalculator {
 
 
     @Override
-    public int calculateHeuristic(Board board) {
+    public int calculateHeuristic(Board board, Turn turn) {
         HashMap<Point,SquareState> currentBoardState = board.getBoard();
-        setColors(board.getTurn());
+        setColors(turn);
         currentHeuristicValue = 0;
 
 
