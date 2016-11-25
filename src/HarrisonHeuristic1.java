@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class HarrisonHeuristic1 implements HeuristicCalculator {
 
     @Override
-    public int calculateHeuristic(Board board) {
+    public int calculateHeuristic(Board board, Turn turn) {
         return 0;
     }
 
