@@ -96,10 +96,18 @@ public class Board implements Serializable {
                 playerTwo.resetPlayer();
             }
             if (playerOne.getColor() == turn){
-                updatedBoardValue = playerOne.executifyMove(this.clone()).getBoard();
+                try{
+                    updatedBoardValue = playerOne.executifyMove(this.clone()).getBoard();
+                }catch (Exception e){
+                    updatedBoardValue = previous;
+                }
             }else{
                 if(playerTwo != null){
-                    updatedBoardValue = playerTwo.executifyMove(this.clone()).getBoard();
+                    try{
+                        updatedBoardValue = playerTwo.executifyMove(this.clone()).getBoard();
+                    }catch (Exception e){
+                        updatedBoardValue = previous;
+                    }
                 }else{//PlayerTwo is human
                     long limit = 20000L;
                     long startTime = System.currentTimeMillis();
