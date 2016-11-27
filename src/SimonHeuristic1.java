@@ -42,9 +42,17 @@ public class SimonHeuristic1 implements HeuristicCalculator {
 
                 }else if(isSidePoint(p)){//sides are worth less than corner but more than other spots
                     if(currentBoardState.get(p) == playerColor){
-                        currentHeuristicValue += sideValue;
+                        if(p.getY() == 1 && p.getY() ==6){
+                            currentHeuristicValue +=1;
+                        }else{
+                            currentHeuristicValue += sideValue;
+                        }
                     }else if(currentBoardState.get(p) == opponentColor){
-                        currentHeuristicValue -= sideValue;
+                        if(p.getY() == 1 && p.getY() ==6){
+                            currentHeuristicValue -= 1;
+                        }else{
+                            currentHeuristicValue -= sideValue;
+                        }
                     }
 
                 }else{
@@ -72,9 +80,6 @@ public class SimonHeuristic1 implements HeuristicCalculator {
 
             }
         }
-        System.out.println("The heuristic for the following board has been calculated: ");
-        System.out.println(board.toString());
-        System.out.println("The following value corresponds to the heuristic value: " + currentHeuristicValue);
         return currentHeuristicValue;
     }
 

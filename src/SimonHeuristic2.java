@@ -25,8 +25,7 @@ public class SimonHeuristic2 implements HeuristicCalculator{
         //Gets the number of possible moves for the player from this board
         Board boardCopy = board.clone();
         boardCopy.setTurn(turn);
-        ArrayList<Board> nextPossibleMoves = NextMoveGenerator.generateNextStates(boardCopy);
-        currentHeuristicValue += nextPossibleMoves.size();
+        ArrayList<Board> nextPossibleMoves;
 
         //Gets the number of possible moves for the opponent
         Turn tempTurn;

@@ -15,6 +15,7 @@ public class Board implements Serializable {
     private Player playerTwo;
     private Turn turn = Turn.BLACK;
     private Turn gameWinner;
+    private HashMap previous;
     private boolean gameOver = false;
     private int turnNumber = 1;
     private boolean noMovesAvailable = false;
@@ -22,6 +23,7 @@ public class Board implements Serializable {
     private int numWhitePieces = 2;
     private ArrayList<Point> blackPieces = new ArrayList<>();
     private ArrayList<Point> whitePieces = new ArrayList<>();
+    private int numOfConsTimeNoMove = 0;
 
     public static final int BOARD_WIDTH = 8;
     public static final int BOARD_HEIGHT = 8;
@@ -87,7 +89,7 @@ public class Board implements Serializable {
 
     private void play() throws CloneNotSupportedException {
         HashMap<Point, SquareState> updatedBoardValue = null;
-        Board previous = null;
+        previous = this.board;
         while(!gameOver){
             playerOne.resetPlayer();
             if(playerTwo != null){
@@ -120,11 +122,17 @@ public class Board implements Serializable {
     public boolean checkIfGameOver() {
         if((numBlackPieces + numWhitePieces) == (BOARD_WIDTH * BOARD_HEIGHT)){
             return true;
-        }else if(noMovesAvailable){
-            return true;
+        }else if(isNoMovesAvailable()){
+            numOfConsTimeNoMove++;
+            if(numOfConsTimeNoMove == 2){
+                return true;
+            }else {
+                return false;
+            }
         }else if(numWhitePieces == 0 || numBlackPieces == 0){
             return true;
         }else{
+            numOfConsTimeNoMove = 0;
             return false;
         }
     }
@@ -437,6 +445,16 @@ public class Board implements Serializable {
 
     public void setGameWinner(Turn gameWinner) {
         this.gameWinner = gameWinner;
+    }
+
+    public boolean isNoMovesAvailable(){
+        Board boardCopy = this.clone();
+        boardCopy.setBoard(previous);
+        if (this.equals(boardCopy)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public boolean isEqual(Board board){

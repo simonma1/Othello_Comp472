@@ -48,7 +48,6 @@ public class MiniMaxPlayer extends Player {
                 if(Math.abs(current.getMiniMaxValue()) == Constant.MAXBETAVALUE && isGameOverCheck(current.getBoardValue())){
                     int hValue = heuristicValueIfGameOver(current.getBoardValue(), turn);
                     current.setMiniMaxValue(hValue);
-                    System.out.println("AM I HERE");
                     stack.push(current);//Repush the node on the stack so that will execute one of the other check
 
                 }else if (current.getDepth() == MINIMAXDEPTH && Math.abs(parent.getMiniMaxValue()) == Constant.MAXBETAVALUE) {//The current node is a leaf and its parent's value hasn't been defined
