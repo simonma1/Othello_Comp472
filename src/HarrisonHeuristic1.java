@@ -9,29 +9,52 @@ public class HarrisonHeuristic1 implements HeuristicCalculator {
     private final int MIDDLE_SHELL = 10;
     private final int OUTER_SHELL = 100;
     private final int BORDER_SHELL = 1000;
-    private final int CORNER = 2000;
-    private SquareState currentPlayerColour;
-    private SquareState opponentPlayerColour;
+    private final int CORNER = 5000;
     private int heuristicScore = 0;
 
     @Override
     public int calculateHeuristic(Board board, Turn turn) {
         heuristicScore = 0;
 
-        // calculate
-        for (Point whitePiece : board.getWhitePieces()) {
-            if (isMiddlePiece(whitePiece))
+        if (turn == Turn.BLACK) {
+            evaluateHeuristicBlackTurn(board);
+        }
+        else {
+            evaluateHeuristicWhiteTurn(board);
+        }
+
+        return heuristicScore;
+    }
+
+    private void evaluateHeuristicWhiteTurn(Board board) {
+        for (Point blackPiece : board.getBlackPieces()) {
+            if (isMiddlePiece(blackPiece))
                 updateHeuristic(-MIDDLE);
-            else if (isMiddleShellPiece(whitePiece))
+            else if (isMiddleShellPiece(blackPiece))
                 updateHeuristic(-MIDDLE_SHELL);
-            else if (isOuterShellPiece(whitePiece))
+            else if (isOuterShellPiece(blackPiece))
                 updateHeuristic(-OUTER_SHELL);
-            else if (isBorderShellPiece(whitePiece))
+            else if (isBorderShellPiece(blackPiece))
                 updateHeuristic(-BORDER_SHELL);
-            else if (isCornerPiece(whitePiece))
+            else if (isCornerPiece(blackPiece))
                 updateHeuristic(-CORNER);
         }
 
+        for (Point whitePiece : board.getWhitePieces()) {
+            if (isMiddlePiece(whitePiece))
+                updateHeuristic(MIDDLE);
+            else if (isMiddleShellPiece(whitePiece))
+                updateHeuristic(MIDDLE_SHELL);
+            else if (isOuterShellPiece(whitePiece))
+                updateHeuristic(OUTER_SHELL);
+            else if (isBorderShellPiece(whitePiece))
+                updateHeuristic(BORDER_SHELL);
+            else if (isCornerPiece(whitePiece))
+                updateHeuristic(CORNER);
+        }
+    }
+
+    private void evaluateHeuristicBlackTurn(Board board) {
         for (Point blackPiece : board.getBlackPieces()) {
             if (isMiddlePiece(blackPiece))
                 updateHeuristic(MIDDLE);
@@ -44,7 +67,19 @@ public class HarrisonHeuristic1 implements HeuristicCalculator {
             else if (isCornerPiece(blackPiece))
                 updateHeuristic(CORNER);
         }
-        return heuristicScore;
+
+        for (Point whitePiece : board.getWhitePieces()) {
+            if (isMiddlePiece(whitePiece))
+                updateHeuristic(-MIDDLE);
+            else if (isMiddleShellPiece(whitePiece))
+                updateHeuristic(-MIDDLE_SHELL);
+            else if (isOuterShellPiece(whitePiece))
+                updateHeuristic(-OUTER_SHELL);
+            else if (isBorderShellPiece(whitePiece))
+                updateHeuristic(-BORDER_SHELL);
+            else if (isCornerPiece(whitePiece))
+                updateHeuristic(-CORNER);
+        }
     }
 
     private boolean isCornerPiece(Point piece) {
