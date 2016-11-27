@@ -101,7 +101,15 @@ public class Board implements Serializable {
                 if(playerTwo != null){
                     updatedBoardValue = playerTwo.executifyMove(this.clone()).getBoard();
                 }else{//PlayerTwo is human
+                    long limit = 20000L;
+                    long startTime = System.currentTimeMillis();
                     updatedBoardValue = getNextMoveFromInput();
+                    if ((startTime + limit) < System.currentTimeMillis()){
+                        System.out.println("Sorry, your answer is too late");
+                        System.exit(0);
+                    }
+                    else
+                        System.out.println("Your answer is on time");
                 }
             }
 
