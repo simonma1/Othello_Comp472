@@ -100,6 +100,7 @@ public class Board implements Serializable {
                     updatedBoardValue = playerOne.executifyMove(this.clone()).getBoard();
                 }catch (Exception e){
                     updatedBoardValue = previous;
+                    numOfConsTimeNoMove++;
                 }
             }else{
                 if(playerTwo != null){
@@ -107,6 +108,7 @@ public class Board implements Serializable {
                         updatedBoardValue = playerTwo.executifyMove(this.clone()).getBoard();
                     }catch (Exception e){
                         updatedBoardValue = previous;
+                        numOfConsTimeNoMove++;
                     }
                 }else{//PlayerTwo is human
                     long limit = 20000L;
@@ -121,14 +123,26 @@ public class Board implements Serializable {
                 }
             }
 
-
+            System.out.println("Value of pipi " + numOfConsTimeNoMove);
             updateBoard(updatedBoardValue);
+            if(numOfConsTimeNoMove >=1){
+                Board boardCopy = this.clone();
+                System.out.println(this.toString());
+                System.out.println(boardCopy.toString());
+                boardCopy.setBoard(previous);
+                if (this.isEqual(boardCopy)){
+
+                }else {
+                    numOfConsTimeNoMove = 0;
+                }
+            }
             System.out.println("Here is the state of the board after the turn: ");
             System.out.println(this.toString());
             gameOver = checkIfGameOver();
             if(!gameOver){
                 updateTurn();
                 turnNumber++;
+                previous = this.clone().board;
             }else{
                 System.out.println(printWinner());
             }
@@ -138,17 +152,12 @@ public class Board implements Serializable {
     public boolean checkIfGameOver() {
         if((numBlackPieces + numWhitePieces) == (BOARD_WIDTH * BOARD_HEIGHT)){
             return true;
-        }else if(isNoMovesAvailable()){
-            numOfConsTimeNoMove++;
-            if(numOfConsTimeNoMove == 2){
+        }else if(numOfConsTimeNoMove == 2){
                 return true;
-            }else {
-                return false;
-            }
         }else if(numWhitePieces == 0 || numBlackPieces == 0){
             return true;
         }else{
-            numOfConsTimeNoMove = 0;
+
             return false;
         }
     }
@@ -466,7 +475,7 @@ public class Board implements Serializable {
     public boolean isNoMovesAvailable(){
         Board boardCopy = this.clone();
         boardCopy.setBoard(previous);
-        if (this.equals(boardCopy)){
+        if (this.isEqual(boardCopy)){
             return true;
         }else{
             return false;

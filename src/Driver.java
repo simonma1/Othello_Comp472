@@ -20,7 +20,7 @@ public class Driver {
         HeuristicCalculator greedyPlayer = new SimonHeuristic3();
         p4.setHeuristicCalculator(greedyPlayer);
 
-        Board board = new Board(p4,p3);
+        Board board = new Board(p2,p3);
 
         board.startNewGame();
     }
