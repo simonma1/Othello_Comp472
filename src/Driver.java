@@ -28,7 +28,11 @@ public class Driver {
         HeuristicCalculator fifthHeuristic = new HarrisonHeuristic2();
         p6.setHeuristicCalculator(fifthHeuristic);
 
-        Board board = new Board(p2,p3);
+        Player p7 = new MiniMaxPlayer();
+        HeuristicCalculator sixthHeuristic = new HarrisonHeuristic2();
+        p7.setHeuristicCalculator(sixthHeuristic);
+
+        Board board = new Board(p7,p3);
 
         board.startNewGame();
     }

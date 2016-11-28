@@ -1,30 +1,44 @@
-import com.sun.org.apache.regexp.internal.RE;
-
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Harrison on 2016-11-27.
+ * Created by Harrison on 2016-11-28.
  */
-public class HarrisonHeuristic2 implements HeuristicCalculator {
-    private final int REGULAR_SQUARE = 50;
-    private final int THIRD_MOST_IMPORTANT_SQUARE = 100;
-    private final int SECOND_MOST_IMPORTANT_SQUARE = 100;
-    private final int FIRST_MOST_IMPORTANT_SQUARE = 150;
+public class HarrisonHeuristic3 implements HeuristicCalculator {
+    private final int REGULAR_SQUARE = 500;
+    private final int THIRD_MOST_IMPORTANT_SQUARE = 1000;
+    private final int SECOND_MOST_IMPORTANT_SQUARE = 1000;
+    private final int FIRST_MOST_IMPORTANT_SQUARE = 1500;
+    private final double PERCENT = 100.0;
     private int heuristicScore = 0;
 
     @Override
     public int calculateHeuristic(Board board, Turn turn) {
         heuristicScore = 0;
 
+        // Make a copy because will be used to get the children states, and will need to change the turn.
+        Board boardCopy = board.clone();
+
+        // find the heuristic of the board and set the turn of the board copy.
         if (turn == Turn.BLACK) {
             evaluateHeuristicBlackTurn(board);
+            boardCopy.setTurn(Turn.WHITE);
         }
         else {
             evaluateHeuristicWhiteTurn(board);
+            boardCopy.setTurn(Turn.BLACK);
         }
 
-        return heuristicScore;
+        // now that the turn is set for the copy, generate children states.
+        ArrayList<Board> nextPossibleMoves = NextMoveGenerator.generateNextStates(boardCopy);
+
+        /*
+        the heuristic score is a percentage score of the number of moves available to the opponent. The more moves
+        are available for the oppponent, the worse the heuristic score
+        */
+        heuristicScore *= 1 - (nextPossibleMoves.size()/PERCENT);
+        return (int)heuristicScore;
     }
 
     private void evaluateHeuristicWhiteTurn(Board board) {
