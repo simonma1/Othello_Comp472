@@ -122,8 +122,7 @@ public class Board implements Serializable {
                         System.out.println("Your answer is on time");
                 }
             }
-
-            System.out.println("Value of pipi " + numOfConsTimeNoMove);
+            
             updateBoard(updatedBoardValue);
             if(numOfConsTimeNoMove >=1){
                 Board boardCopy = this.clone();
